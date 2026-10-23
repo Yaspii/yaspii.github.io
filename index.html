@@ -123,7 +123,7 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:16px;justify-content:space-between;
 </div></header>
 
 <div class="film"><div class="wrap">
-  <video class="hero-video" id="film" src="hero.mp4" poster="hero-poster.jpg" autoplay muted loop playsinline preload="auto" aria-label="Yaspii teaser: made for 32°C and 80% humidity"></video>
+  <canvas class="hero-video" id="film" role="img" aria-label="Yaspii brand film: made for 32°C and 80% humidity"></canvas>
 </div></div>
 
 <div class="spec" aria-label="Design targets"><div class="wrap">
@@ -183,9 +183,8 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:16px;justify-content:space-between;
   <span>Designed for heat. Fitted for Asia.</span>
 </div></footer>
 
+<script src="film.js" defer></script>
 <script>
-// Respect reduced motion: no autoplay, show controls instead.
-try { if (matchMedia("(prefers-reduced-motion: reduce)").matches) { const v = document.getElementById("film"); v.removeAttribute("autoplay"); v.pause(); v.controls = true; } } catch (e) {}
 // Set FORM_ENDPOINT to a form service URL (e.g. Formspree) once the site is hosted.
 const FORM_ENDPOINT = "";
 const form = document.getElementById('waitlist');
