@@ -7,7 +7,7 @@
 <meta name="description" content="Yaspii — activewear designed for heat, humidity and Asian fit. Join the waitlist for the first drop.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Figtree:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Figtree:wght@400;500;600&family=JetBrains+Mono:wght@400;500&family=Noto+Sans+SC:wght@400;600;800&family=Noto+Sans+Thai:wght@400;600;800&display=swap">
 <style>
 /* Layout: celadon editorial — type-led hero, a 16:9 film band, a spec strip, then quiet sections on a celadon ground */
 :root{
@@ -19,9 +19,9 @@
   --accent:#C48612;
   --accent-text:#875B05;
   --accent-ink:#173F33;
-  --display:"Bricolage Grotesque",ui-sans-serif,system-ui,sans-serif;
-  --body:"Figtree",ui-sans-serif,system-ui,sans-serif;
-  --mono:"JetBrains Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+  --display:"Bricolage Grotesque","Noto Sans Thai","Noto Sans SC",ui-sans-serif,system-ui,sans-serif;
+  --body:"Figtree","Noto Sans Thai","Noto Sans SC",ui-sans-serif,system-ui,sans-serif;
+  --mono:"JetBrains Mono","Noto Sans Thai","Noto Sans SC",ui-monospace,SFMono-Regular,Menlo,monospace;
 }
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
   --bg:#0F2A22;--surface:#16352C;--ink:#E1ECE2;--muted:#9DB7AA;--line:#27463C;--accent:#E9B24A;--accent-text:#E9B24A;--accent-ink:#0F2A22;color-scheme:dark}}
@@ -37,6 +37,14 @@ a{color:inherit}
 nav .wrap{display:flex;justify-content:space-between;align-items:center;padding-block:22px}
 .logo{font-family:var(--display);font-weight:800;font-size:26px;letter-spacing:-.02em;text-decoration:none}
 .logo span{color:var(--accent)}
+.navr{display:flex;align-items:center;gap:18px;flex-wrap:wrap;justify-content:flex-end}
+.lang{display:flex;border:1px solid var(--line);border-radius:999px;padding:3px}
+.lang button{font:500 12px/1 var(--mono);letter-spacing:.04em;color:var(--muted);background:none;border:0;border-radius:999px;padding:7px 10px;cursor:pointer}
+.lang button[aria-pressed="true"]{background:var(--ink);color:var(--bg)}
+:lang(th) h1,:lang(zh-CN) h1{line-height:1.12;letter-spacing:-.01em}
+:lang(th) h2,:lang(zh-CN) h2{line-height:1.25;letter-spacing:0}
+:lang(th) .eyebrow,:lang(th) .tag,:lang(th) label,:lang(th) .spec small,:lang(zh-CN) .eyebrow,:lang(zh-CN) .tag,:lang(zh-CN) label,:lang(zh-CN) .spec small{letter-spacing:.02em}
+@media (max-width:520px){.navlink{display:none}}
 .navlink{font-family:var(--mono);font-size:13px;letter-spacing:.06em;text-transform:uppercase;text-decoration:none;border-bottom:1px solid var(--ink);padding-bottom:2px}
 
 /* hero */
@@ -57,7 +65,8 @@ h1 em{font-style:normal;color:var(--accent)}
 .spec{border-block:1px solid var(--line)}
 .spec .wrap{display:grid;grid-template-columns:repeat(4,1fr);padding-block:0}
 .spec .wrap>div{padding:22px 18px 22px 0;border-right:1px solid var(--line)}
-.spec .wrap>div:last-child{border-right:0} .spec .wrap>div+div{padding-left:18px}
+.spec .wrap>div:last-child{border-right:0}
+.spec .wrap>div+div{padding-left:18px}
 .spec b{display:block;font-family:var(--display);font-weight:700;font-size:clamp(26px,3.4vw,38px);letter-spacing:-.02em;font-variant-numeric:tabular-nums}
 .spec small{font-family:var(--mono);font-size:12px;letter-spacing:.05em;text-transform:uppercase;color:var(--muted)}
 @media (max-width:720px){.spec .wrap{grid-template-columns:repeat(2,1fr)}.spec .wrap>div:nth-child(2){border-right:0}.spec .wrap>div:nth-child(-n+2){border-bottom:1px solid var(--line)}.spec .wrap>div:nth-child(3){padding-left:0}}
@@ -108,81 +117,87 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:16px;justify-content:space-between;
 
 <nav><div class="wrap">
   <a class="logo" href="#top" aria-label="Yaspii home">yaspii<span>.</span></a>
-  <a class="navlink" href="#join">Join the waitlist</a>
+  <div class="navr">
+    <div class="lang" role="group" aria-label="Language"><button type="button" data-lang="en" aria-pressed="true">EN</button><button type="button" data-lang="zh" aria-pressed="false" lang="zh-CN">中文</button><button type="button" data-lang="th" aria-pressed="false" lang="th">ไทย</button></div>
+    <a class="navlink" href="#join" data-i18n="nav.join">Join the waitlist</a>
+  </div>
 </div></nav>
 
 <header class="hero" id="top"><div class="wrap">
   <div>
-    <div class="eyebrow">Activewear for the tropics · First drop in development</div>
-    <h1>Made for <em>32°C</em> and 80% humidity.</h1>
+    <div class="eyebrow" data-i18n="hero.eyebrow">Activewear for the tropics · First drop in development</div>
+    <h1 data-i18n-html="hero.h1">Made for <em>32°C</em> and 80% humidity.</h1>
   </div>
   <div class="hero-row">
-    <p class="lede">Most activewear is designed for cool studios in Vancouver or London. Yaspii is designed for the air you actually train in: heavy, hot and wet.</p>
-    <a class="btn" href="#join">Get early access →</a>
+    <p class="lede" data-i18n="hero.lede">Most activewear is designed for cool studios in Vancouver or London. Yaspii is designed for the air you actually train in: heavy, hot and wet.</p>
+    <a class="btn" href="#join" data-i18n="hero.cta">Get early access →</a>
   </div>
 </div></header>
 
 <div class="film"><div class="wrap">
-  <canvas class="hero-video" id="film" role="img" aria-label="Yaspii brand film: made for 32°C and 80% humidity"></canvas>
+  <canvas class="hero-video" id="film" role="img" data-i18n-aria="film.aria" aria-label="Yaspii brand film: made for 32°C and 80% humidity"></canvas>
 </div></div>
 
 <div class="spec" aria-label="Design targets"><div class="wrap">
-  <div><b>32°C</b><small>Design air temp</small></div>
-  <div><b>80% RH</b><small>Design humidity</small></div>
-  <div><b>3–5</b><small>Pieces in drop one</small></div>
-  <div><b>Asian</b><small>Fit block & sizing</small></div>
+  <div><b>32°C</b><small data-i18n="spec.temp">Design air temp</small></div>
+  <div><b>80% RH</b><small data-i18n="spec.rh">Design humidity</small></div>
+  <div><b>3–5</b><small data-i18n="spec.pieces">Pieces in drop one</small></div>
+  <div><b data-i18n="spec.fitv">Asian</b><small data-i18n="spec.fit">Fit block & sizing</small></div>
 </div></div>
 
 <section><div class="wrap">
-  <div class="eyebrow">What we are fixing</div>
-  <h2>Three things your leggings get wrong after one humid month.</h2>
+  <div class="eyebrow" data-i18n="fix.eyebrow">What we are fixing</div>
+  <h2 data-i18n="fix.h2">Three things your leggings get wrong after one humid month.</h2>
   <div class="problems">
-    <article><div class="tag">Odor</div><h3>They keep the smell</h3><p>Synthetic fabrics hold odor after a few sweaty sessions. We are testing fabrics and finishes that wash clean every time.</p></article>
-    <article><div class="tag">Sheerness</div><h3>They go see-through</h3><p>Thin, stretched fabric turns sheer in a squat. Every Yaspii bottom gets a squat test under daylight before it ships.</p></article>
-    <article><div class="tag">Fit</div><h3>The sizes don't match you</h3><p>A medium means something different at every brand. We build on an Asian fit block and publish real garment measurements, in cm.</p></article>
+    <article><div class="tag" data-i18n="fix.odor.tag">Odor</div><h3 data-i18n="fix.odor.h3">They keep the smell</h3><p data-i18n="fix.odor.p">Synthetic fabrics hold odor after a few sweaty sessions. We are testing fabrics and finishes that wash clean every time.</p></article>
+    <article><div class="tag" data-i18n="fix.sheer.tag">Sheerness</div><h3 data-i18n="fix.sheer.h3">They go see-through</h3><p data-i18n="fix.sheer.p">Thin, stretched fabric turns sheer in a squat. Every Yaspii bottom gets a squat test under daylight before it ships.</p></article>
+    <article><div class="tag" data-i18n="fix.fit.tag">Fit</div><h3 data-i18n="fix.fit.h3">The sizes don't match you</h3><p data-i18n="fix.fit.p">A medium means something different at every brand. We build on an Asian fit block and publish real garment measurements, in cm.</p></article>
   </div>
 </div></section>
 
 <section class="drop"><div class="wrap">
-  <div class="eyebrow">Drop one · Yoga & Pilates</div>
-  <h2>A small first drop, done properly.</h2>
+  <div class="eyebrow" data-i18n="drop.eyebrow">Drop one · Yoga & Pilates</div>
+  <h2 data-i18n="drop.h2">A small first drop, done properly.</h2>
   <div class="pieces">
     <article class="piece">
       <div class="swatch" style="--sw:#E6EEE5" aria-hidden="true"><svg viewBox="0 0 400 300" preserveAspectRatio="xMidYMid meet"><rect width="400" height="300" fill="#E6EEE5"/><g stroke="#0F2A22" stroke-width="2" stroke-linejoin="round" fill="none"><path d="M152 28H248L255 52Q263 80 261 100L238 282H213L203 122Q200 112 197 122L187 282H162L139 100Q137 80 145 52Z" fill="#1F4A3D"/><path d="M145 52H255"/><path d="M148 40H252" stroke="#6E9483" stroke-dasharray="4 4" stroke-width="1.5"/><path d="M200 52V112"/><path d="M243 68L254 72L249 150L236 148Z" stroke="#6E9483" stroke-dasharray="5 4" stroke-width="1.5"/><path d="M165 270H185M215 270H236" stroke="#6E9483" stroke-dasharray="4 4" stroke-width="1.5"/></g></svg></div>
-      <div class="info"><div class="meta">01 · Bottom · Prototype</div><h3>Monsoon Legging</h3><p>High rise, squat-proof, quick to dry. A side pocket that actually holds a phone.</p></div>
+      <div class="info"><div class="meta" data-i18n="p1.meta">01 · Bottom · Prototype</div><h3>Monsoon Legging</h3><p data-i18n="p1.p">High rise, squat-proof, quick to dry. A side pocket that actually holds a phone.</p></div>
     </article>
     <article class="piece">
       <div class="swatch" style="--sw:#D2E0D3" aria-hidden="true"><svg viewBox="0 0 400 300" preserveAspectRatio="xMidYMid meet"><rect width="400" height="300" fill="#D2E0D3"/><g stroke="#2E5244" stroke-width="2" stroke-linejoin="round" fill="none"><path d="M166 34H180Q186 78 200 90Q214 78 220 34H234Q238 88 262 128Q270 150 263 170V200H137V170Q130 150 138 128Q162 88 166 34Z" fill="#8FB59A"/><path d="M137 170H263"/><path d="M140 180H260" stroke="#2E5244" stroke-dasharray="4 4" stroke-width="1.5"/><path d="M200 90V170" stroke-width="1.5"/></g><g fill="#2E5244" opacity=".55"><circle cx="150" cy="136" r="1.8"/><circle cx="158" cy="136" r="1.8"/><circle cx="166" cy="136" r="1.8"/><circle cx="174" cy="136" r="1.8"/><circle cx="228" cy="136" r="1.8"/><circle cx="236" cy="136" r="1.8"/><circle cx="244" cy="136" r="1.8"/><circle cx="252" cy="136" r="1.8"/><circle cx="150" cy="144" r="1.8"/><circle cx="158" cy="144" r="1.8"/><circle cx="166" cy="144" r="1.8"/><circle cx="174" cy="144" r="1.8"/><circle cx="228" cy="144" r="1.8"/><circle cx="236" cy="144" r="1.8"/><circle cx="244" cy="144" r="1.8"/><circle cx="252" cy="144" r="1.8"/><circle cx="150" cy="152" r="1.8"/><circle cx="158" cy="152" r="1.8"/><circle cx="166" cy="152" r="1.8"/><circle cx="174" cy="152" r="1.8"/><circle cx="228" cy="152" r="1.8"/><circle cx="236" cy="152" r="1.8"/><circle cx="244" cy="152" r="1.8"/><circle cx="252" cy="152" r="1.8"/><circle cx="150" cy="160" r="1.8"/><circle cx="158" cy="160" r="1.8"/><circle cx="166" cy="160" r="1.8"/><circle cx="174" cy="160" r="1.8"/><circle cx="228" cy="160" r="1.8"/><circle cx="236" cy="160" r="1.8"/><circle cx="244" cy="160" r="1.8"/><circle cx="252" cy="160" r="1.8"/></g></svg></div>
-      <div class="info"><div class="meta">02 · Top · Prototype</div><h3>Dew Bra</h3><p>Light support, breathable back panel, no padding that stays wet all day.</p></div>
+      <div class="info"><div class="meta" data-i18n="p2.meta">02 · Top · Prototype</div><h3>Dew Bra</h3><p data-i18n="p2.p">Light support, breathable back panel, no padding that stays wet all day.</p></div>
     </article>
     <article class="piece">
       <div class="swatch" style="--sw:#F1EAD8" aria-hidden="true"><svg viewBox="0 0 400 300" preserveAspectRatio="xMidYMid meet"><rect width="400" height="300" fill="#F1EAD8"/><g stroke="#8A5A05" stroke-width="2" stroke-linejoin="round" fill="none"><path d="M146 46Q168 38 180 40Q200 62 220 40Q232 38 254 46L318 88L296 134L268 120L271 266H129L132 120L104 134L82 88Z" fill="#E2A72E"/><path d="M180 40Q200 50 220 40Q200 68 180 40Z" fill="#C48612"/><path d="M176 41Q200 76 224 41" stroke-width="1.5"/><path d="M146 46Q140 84 132 120M254 46Q260 84 268 120" stroke-width="1.5"/><path d="M131 256H269" stroke-dasharray="4 4" stroke-width="1.5"/><path d="M106 126L86 96M294 126L314 96" stroke-dasharray="4 4" stroke-width="1.5"/></g></svg></div>
-      <div class="info"><div class="meta">03 · Top · Prototype</div><h3>Heat Tee</h3><p>Loose, airy and opaque. Made to walk from class to coffee without changing.</p></div>
+      <div class="info"><div class="meta" data-i18n="p3.meta">03 · Top · Prototype</div><h3>Heat Tee</h3><p data-i18n="p3.p">Loose, airy and opaque. Made to walk from class to coffee without changing.</p></div>
     </article>
   </div>
 </div></section>
 
 <section class="join" id="join"><div class="wrap">
   <div>
-    <div class="eyebrow">Waitlist</div>
-    <h2>Be first to try drop one.</h2>
-    <p>Join the list and we will send you fit-test invitations, launch dates and a founding-member price. One email a month at most.</p>
+    <div class="eyebrow" data-i18n="join.eyebrow">Waitlist</div>
+    <h2 data-i18n="join.h2">Be first to try drop one.</h2>
+    <p data-i18n="join.p">Join the list and we will send you fit-test invitations, launch dates and a founding-member price. One email a month at most.</p>
   </div>
   <form id="waitlist" novalidate>
-    <div class="field"><label for="email">Email</label><input id="email" name="email" type="email" autocomplete="email" placeholder="you@example.com" required></div>
-    <div class="field"><label for="city">City</label><input id="city" name="city" type="text" autocomplete="address-level2" placeholder="Singapore"></div>
-    <div class="field"><label for="practice">What do you train most?</label>
-      <select id="practice" name="practice"><option value="">Choose one</option><option>Yoga</option><option>Pilates</option><option>Gym</option><option>Running</option><option>Everyday wear</option></select></div>
-    <button class="btn" type="submit">Join the waitlist</button>
+    <div class="field"><label for="email" data-i18n="form.email">Email</label><input id="email" name="email" type="email" autocomplete="email" placeholder="you@example.com" required></div>
+    <div class="field"><label for="city" data-i18n="form.city">City</label><input id="city" name="city" type="text" autocomplete="address-level2" placeholder="Singapore" data-i18n-ph="form.city.ph"></div>
+    <div class="field"><label for="practice" data-i18n="form.practice">What do you train most?</label>
+      <select id="practice" name="practice"><option value="" data-i18n="opt.choose">Choose one</option><option value="yoga" data-i18n="opt.yoga">Yoga</option><option value="pilates" data-i18n="opt.pilates">Pilates</option><option value="gym" data-i18n="opt.gym">Gym</option><option value="running" data-i18n="opt.running">Running</option><option value="everyday" data-i18n="opt.everyday">Everyday wear</option></select></div>
+    <button class="btn" type="submit" data-i18n="form.submit">Join the waitlist</button>
     <p class="note" id="note" role="status"></p>
   </form>
 </div></section>
 
 <footer><div class="wrap">
   <span>© 2026 Yaspii</span>
-  <span>Designed for heat. Fitted for Asia.</span>
+  <span data-i18n="footer.tag">Designed for heat. Fitted for Asia.</span>
 </div></footer>
 
+<script src="lang-zh.js"></script>
+<script src="lang-th.js"></script>
+<script src="i18n.js"></script>
 <script src="film.js" defer></script>
 <script>
 // Set FORM_ENDPOINT to a form service URL (e.g. Formspree) once the site is hosted.
@@ -192,14 +207,14 @@ const note = document.getElementById('note');
 form.addEventListener('submit', async (e) => {
   e.preventDefault();
   const email = form.email.value.trim();
-  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { note.textContent = 'Enter a valid email address, like you@example.com.'; form.email.focus(); return; }
-  if (!FORM_ENDPOINT) { note.textContent = 'The waitlist opens very soon. Please check back in a few days.'; return; }
-  note.textContent = 'Sending…';
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { note.textContent = YT('msg.invalid'); form.email.focus(); return; }
+  if (!FORM_ENDPOINT) { note.textContent = YT('msg.soon'); return; }
+  note.textContent = YT('msg.sending');
   try {
     const r = await fetch(FORM_ENDPOINT, { method: 'POST', headers: { 'Accept': 'application/json' }, body: new FormData(form) });
     if (!r.ok) throw new Error();
-    form.reset(); note.textContent = "You're on the list. We'll be in touch before the first drop.";
-  } catch { note.textContent = 'That did not go through. Please try again in a minute.'; }
+    form.reset(); note.textContent = YT('msg.ok');
+  } catch { note.textContent = YT('msg.err'); }
 });
 </script>
 </body>
