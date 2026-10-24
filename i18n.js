@@ -52,4 +52,10 @@
     start = n.startsWith("zh") ? "zh" : n.startsWith("th") ? "th" : "en";
   }
   apply(start);
+  /* Back/Forward restores an old snapshot of the page: re-sync the language chosen on other pages. */
+  window.addEventListener("pageshow", e => {
+    if (!e.persisted) return;
+    let l = null; try { l = localStorage.getItem("yaspii-lang"); } catch (err) {}
+    if (LANGS.includes(l) && l !== cur) apply(l);
+  });
 })();
