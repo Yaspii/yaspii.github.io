@@ -1,0 +1,230 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Thai Meal Spin · Yaspii</title>
+<meta name="description" content="Spin for a Thai dish that fits the calories you have left today.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,700;12..96,800&family=Figtree:wght@400;500;600&family=JetBrains+Mono:wght@500&family=Noto+Sans+SC:wght@400;600;800&family=Noto+Sans+Thai:wght@400;600;800&display=swap">
+<style>
+/* Layout: one narrow app column (phone-first), profile card, stats row, wheel, result */
+:root{--bg:#DDE8DC;--card:#EEF3ED;--ink:#173F33;--muted:#4C6B60;--line:#B4CAB6;--accent:#E2A72E;--accent-deep:#875B05;
+--display:"Bricolage Grotesque","Noto Sans Thai","Noto Sans SC",system-ui,sans-serif;--body:"Figtree","Noto Sans Thai","Noto Sans SC",system-ui,sans-serif;--mono:"JetBrains Mono","Noto Sans Thai","Noto Sans SC",ui-monospace,monospace}
+@media (prefers-color-scheme:dark){:root{--bg:#0F2A22;--card:#16352C;--ink:#E1ECE2;--muted:#9DB7AA;--line:#27463C;--accent-deep:#E9B24A;color-scheme:dark}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 var(--body);-webkit-font-smoothing:antialiased}
+.app{max-width:520px;margin:0 auto;padding:0 max(16px,env(safe-area-inset-right,0px)) 40px max(16px,env(safe-area-inset-left,0px))}
+header{display:flex;justify-content:space-between;align-items:center;padding-block:18px}
+.logo{font:800 24px var(--display);letter-spacing:-.02em;text-decoration:none;color:inherit}.logo span{color:var(--accent)}
+.lang{display:flex;border:1px solid var(--line);border-radius:999px;padding:3px}
+.lang button{font:500 12px/1 var(--mono);color:var(--muted);background:none;border:0;border-radius:999px;padding:7px 10px;cursor:pointer}
+.lang button[aria-pressed="true"]{background:var(--ink);color:var(--bg)}
+h1{font:800 clamp(34px,9vw,46px)/1.05 var(--display);letter-spacing:-.025em;margin:8px 0 6px}
+:lang(th) h1,:lang(zh-CN) h1{line-height:1.2;letter-spacing:0}
+.sub{color:var(--muted);margin:0 0 20px}
+.card{background:var(--card);border-radius:14px;padding:18px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+label{display:grid;gap:6px;font:500 12px var(--mono);letter-spacing:.04em;text-transform:uppercase;color:var(--muted)}
+input{width:100%;font:500 18px var(--body);color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:12px 14px}
+input:focus,button:focus-visible{outline:2px solid var(--accent);outline-offset:1px}
+.seg{display:grid;grid-template-columns:1fr 1fr;gap:6px;grid-column:1/-1}
+.seg button{font:600 16px var(--body);padding:12px;border-radius:10px;border:1px solid var(--line);background:var(--bg);color:var(--ink);cursor:pointer}
+.seg button[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.primary{width:100%;margin-top:14px;font:600 17px var(--body);padding:15px;border:0;border-radius:999px;background:var(--ink);color:var(--bg);cursor:pointer}
+.err{color:#B3261E;font-size:14px;min-height:1.3em;margin:8px 0 0}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:14px}
+.stat{background:var(--card);border-radius:12px;padding:12px 10px}
+.stat b{display:block;font:700 24px var(--display);font-variant-numeric:tabular-nums}
+.stat small{font:500 11px var(--mono);letter-spacing:.03em;color:var(--muted)}
+.stat.left b{color:var(--accent-deep)}
+.eat{display:flex;gap:10px;align-items:end;margin-bottom:6px}.eat label{flex:1}
+.link{background:none;border:0;color:var(--muted);text-decoration:underline;font:500 14px var(--body);cursor:pointer;padding:6px 0}
+.wheelbox{position:relative;width:min(100%,380px);aspect-ratio:1;margin:18px auto 8px}
+.wheelbox canvas{width:100%;height:100%;display:block}
+.pointer{position:absolute;left:50%;top:-4px;transform:translateX(-50%);width:0;height:0;border-left:14px solid transparent;border-right:14px solid transparent;border-top:24px solid var(--accent);filter:drop-shadow(0 2px 0 rgba(0,0,0,.15))}
+.spin{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:28%;aspect-ratio:1;border-radius:50%;border:5px solid #F1EAD8;background:var(--accent);color:#173F33;font:800 clamp(15px,4.4vw,19px)/1 var(--display);cursor:pointer;box-shadow:0 4px 0 #9A6A0C}
+.spin:active{transform:translate(-50%,-48%);box-shadow:0 2px 0 #9A6A0C}
+.spin:disabled{opacity:.5;cursor:default}
+.result{text-align:center;margin-top:10px}
+.result .dish{font:800 26px/1.2 var(--display);margin:4px 0}
+.result .kc{font:500 13px var(--mono);color:var(--muted)}
+.empty{text-align:center;color:var(--muted);padding:24px 8px}
+.note{font-size:12.5px;color:var(--muted);margin-top:22px;line-height:1.5}
+[hidden]{display:none!important}
+</style>
+</head>
+<body>
+<div class="app">
+  <header>
+    <a class="logo" href="./" aria-label="Yaspii home">yaspii<span>.</span></a>
+    <div class="lang" role="group" aria-label="Language"><button type="button" data-lang="en">EN</button><button type="button" data-lang="zh" lang="zh-CN">中文</button><button type="button" data-lang="th" lang="th">ไทย</button></div>
+  </header>
+
+  <h1 data-t="title">Thai Meal Spin</h1>
+  <p class="sub" data-t="sub">Tell us a little about you, then spin for a Thai dish that fits what you have left today.</p>
+
+  <section id="profile" class="card" hidden>
+    <form id="pform" class="grid" novalidate>
+      <div class="seg" role="group" aria-label="Sex"><button type="button" data-sex="female" data-t="female">Female</button><button type="button" data-sex="male" data-t="male">Male</button></div>
+      <label><span data-t="age">Age</span><input id="age" type="number" inputmode="numeric" min="10" max="100" placeholder="30"></label>
+      <label><span data-t="height">Height (cm)</span><input id="height" type="number" inputmode="decimal" min="100" max="230" placeholder="162"></label>
+      <label style="grid-column:1/-1"><span data-t="weight">Weight (kg)</span><input id="weight" type="number" inputmode="decimal" min="25" max="300" placeholder="56"></label>
+      <button class="primary" type="submit" style="grid-column:1/-1" data-t="save">Save and continue</button>
+      <p class="err" id="perr" role="status" style="grid-column:1/-1"></p>
+    </form>
+  </section>
+
+  <section id="main" hidden>
+    <div class="stats">
+      <div class="stat"><b id="burn">–</b><small data-t="burn">Daily burn</small></div>
+      <div class="stat"><b id="target">–</b><small data-t="target">Today's target</small></div>
+      <div class="stat left"><b id="left">–</b><small data-t="left">Left today</small></div>
+    </div>
+    <div class="card">
+      <div class="eat">
+        <label><span data-t="eaten">Eaten so far today (kcal)</span><input id="eaten" type="number" inputmode="numeric" min="0" max="6000" placeholder="0"></label>
+      </div>
+      <button class="link" id="edit" type="button" data-t="edit">Edit my details</button>
+    </div>
+
+    <div id="wheelwrap">
+      <div class="wheelbox">
+        <canvas id="wheel" width="760" height="760" role="img" aria-label="Meal wheel"></canvas>
+        <div class="pointer" aria-hidden="true"></div>
+        <button class="spin" id="spin" type="button" data-t="spin">SPIN</button>
+      </div>
+      <div class="result" id="result" role="status" aria-live="polite"></div>
+    </div>
+    <p class="empty" id="empty" hidden data-t="empty">You've reached today's target. Water, tea or an easy walk is a great next move.</p>
+  </section>
+
+  <p class="note" data-t="note">Rough estimates for everyday use, not medical or nutrition advice. Calories per dish vary with portion and recipe. Your details stay on this device only.</p>
+</div>
+
+<script src="meal-core.js"></script>
+<script>
+(function () {
+  const M = window.YaspiiMeal;
+  const T = {
+    en: { title: "Thai Meal Spin", sub: "Tell us a little about you, then spin for a Thai dish that fits what you have left today.", female: "Female", male: "Male", age: "Age", height: "Height (cm)", weight: "Weight (kg)", save: "Save and continue", burn: "Daily burn", target: "Today's target", left: "Left today", eaten: "Eaten so far today (kcal)", edit: "Edit my details", spin: "SPIN", empty: "You've reached today's target. Water, tea or an easy walk is a great next move.", note: "Rough estimates for everyday use, not medical or nutrition advice. Calories per dish vary with portion and recipe. Your details stay on this device only.", errSex: "Choose female or male.", errNum: "Check your age (10–100), height (100–230 cm) and weight (25–300 kg).", fits: "about {k} kcal · fits your {l} kcal left", teen: "Under 18: we show your full daily need, with no deficit." },
+    zh: { title: "泰式餐食转盘", sub: "先简单填写你的信息，再转一转，抽一道符合今天剩余热量的泰国菜。", female: "女", male: "男", age: "年龄", height: "身高（厘米）", weight: "体重（公斤）", save: "保存并继续", burn: "每日消耗", target: "今日目标", left: "今日剩余", eaten: "今天已摄入（千卡）", edit: "修改我的信息", spin: "转一转", empty: "今天的目标已经达到。喝点水、喝杯茶，或者轻松散个步，都是不错的选择。", note: "数值为日常粗略估算，不构成医疗或营养建议。每道菜的热量会因分量和做法不同而变化。你的信息只保存在这台设备上。", errSex: "请选择女或男。", errNum: "请检查年龄（10–100）、身高（100–230 厘米）和体重（25–300 公斤）。", fits: "约 {k} 千卡 · 在你剩余的 {l} 千卡以内", teen: "未满 18 岁：按正常每日需求显示，不设热量缺口。" },
+    th: { title: "หมุนเมนูไทย", sub: "กรอกข้อมูลของคุณสักนิด แล้วหมุนเพื่อสุ่มเมนูไทยที่พอดีกับแคลอรีที่เหลือของวันนี้", female: "หญิง", male: "ชาย", age: "อายุ", height: "ส่วนสูง (ซม.)", weight: "น้ำหนัก (กก.)", save: "บันทึกและไปต่อ", burn: "การเผาผลาญต่อวัน", target: "เป้าหมายวันนี้", left: "เหลือวันนี้", eaten: "กินไปแล้ววันนี้ (กิโลแคลอรี)", edit: "แก้ไขข้อมูลของฉัน", spin: "หมุน", empty: "วันนี้ถึงเป้าหมายแล้ว ดื่มน้ำ จิบชา หรือเดินเล่นเบา ๆ ก็เป็นตัวเลือกที่ดี", note: "เป็นค่าประมาณคร่าว ๆ สำหรับใช้ในชีวิตประจำวัน ไม่ใช่คำแนะนำทางการแพทย์หรือโภชนาการ แคลอรีของแต่ละเมนูขึ้นอยู่กับปริมาณและสูตร ข้อมูลของคุณเก็บไว้บนอุปกรณ์นี้เท่านั้น", errSex: "เลือกเพศหญิงหรือชาย", errNum: "ตรวจสอบอายุ (10–100) ส่วนสูง (100–230 ซม.) และน้ำหนัก (25–300 กก.)", fits: "ประมาณ {k} กิโลแคลอรี · พอดีกับที่เหลือ {l} กิโลแคลอรี", teen: "อายุต่ำกว่า 18 ปี: แสดงความต้องการพลังงานปกติ ไม่ลดแคลอรี" }
+  };
+  const store = {
+    get(k) { try { return JSON.parse(localStorage.getItem(k)); } catch (e) { return null; } },
+    set(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) {} }
+  };
+  const $ = id => document.getElementById(id);
+  const today = new Date().toISOString().slice(0, 10);
+  let lang = "en", profile = store.get("yaspii-meal-profile"), sex = profile ? profile.sex : null;
+  let items = [], rot = 0, spinning = false, lastPick = null;
+  const t = k => (T[lang] && T[lang][k]) || T.en[k];
+  const dishName = d => d.name[lang] || d.name.en;
+
+  function setLang(l) {
+    lang = T[l] ? l : "en";
+    document.documentElement.lang = lang === "zh" ? "zh-CN" : lang;
+    document.title = t("title") + " · Yaspii";
+    document.querySelectorAll("[data-t]").forEach(el => el.textContent = t(el.dataset.t));
+    document.querySelectorAll("[data-lang]").forEach(b => b.setAttribute("aria-pressed", String(b.dataset.lang === lang)));
+    refresh();
+  }
+
+  function showProfile(on) {
+    $("profile").hidden = !on; $("main").hidden = on;
+    if (on && profile) { $("age").value = profile.age; $("height").value = profile.heightCm; $("weight").value = profile.weightKg; }
+    document.querySelectorAll("[data-sex]").forEach(b => b.setAttribute("aria-pressed", String(b.dataset.sex === sex)));
+  }
+
+  function eaten() {
+    const v = parseFloat($("eaten").value);
+    return isFinite(v) && v > 0 ? Math.min(v, 6000) : 0;
+  }
+
+  function refresh() {
+    if (!profile) return;
+    const r = M.remaining(profile, eaten());
+    $("burn").textContent = r.burn; $("target").textContent = r.target; $("left").textContent = Math.round(r.left);
+    items = M.candidates(r.left);
+    $("wheelwrap").hidden = items.length === 0; $("empty").hidden = items.length !== 0;
+    if (profile.age < 18) $("result").textContent = t("teen");
+    else if (lastPick && items.includes(lastPick)) showPick(lastPick, r.left); else $("result").textContent = "";
+    draw();
+  }
+
+  const COLORS = ["#173F33", "#2E5A4E", "#3F6E5F", "#567F6F"];
+  function draw() {
+    const c = $("wheel"), x = c.getContext("2d"), n = items.length, R = c.width / 2;
+    x.setTransform(1, 0, 0, 1, 0, 0); x.clearRect(0, 0, c.width, c.height);
+    if (!n) return;
+    x.translate(R, R); x.rotate(rot);
+    const a = 2 * Math.PI / n;
+    for (let i = 0; i < n; i++) {
+      x.beginPath(); x.moveTo(0, 0); x.arc(0, 0, R - 6, -Math.PI / 2 + i * a, -Math.PI / 2 + (i + 1) * a); x.closePath();
+      x.fillStyle = COLORS[(i === n - 1 && n % 4 === 1) ? 2 : i % 4]; x.fill();
+      x.strokeStyle = "#DDE8DC"; x.lineWidth = 3; x.stroke();
+      x.save(); x.rotate(-Math.PI / 2 + (i + .5) * a);
+      x.fillStyle = "#E1ECE2"; x.textAlign = "right"; x.textBaseline = "middle";
+      let label = dishName(items[i]).split(" (")[0], size = 30;
+      x.font = `700 ${size}px "Bricolage Grotesque","Noto Sans Thai","Noto Sans SC",sans-serif`;
+      while (x.measureText(label).width > R * .58 && size > 18) { size -= 2; x.font = `700 ${size}px "Bricolage Grotesque","Noto Sans Thai","Noto Sans SC",sans-serif`; }
+      if (x.measureText(label).width > R * .58) { while (x.measureText(label + "…").width > R * .58) label = label.slice(0, -1); label += "…"; }
+      x.fillText(label, R - 26, -8);
+      x.font = `500 20px "JetBrains Mono",monospace`; x.fillStyle = "#E9B24A"; x.fillText(items[i].kcal + " kcal", R - 26, 20);
+      x.restore();
+    }
+    x.beginPath(); x.arc(0, 0, R - 6, 0, 2 * Math.PI); x.strokeStyle = "#E2A72E"; x.lineWidth = 8; x.stroke();
+  }
+
+  function showPick(d, left) {
+    $("result").innerHTML = "";
+    const n = document.createElement("div"); n.className = "dish"; n.textContent = dishName(d);
+    const k = document.createElement("div"); k.className = "kc"; k.textContent = t("fits").replace("{k}", d.kcal).replace("{l}", Math.round(left));
+    $("result").append(n, k);
+  }
+
+  function spin() {
+    if (spinning || !items.length) return;
+    const n = items.length, i = Math.floor(Math.random() * n), a = 2 * Math.PI / n;
+    const TAU = 2 * Math.PI, goal = -(i + .5) * a, start = rot, t0 = performance.now();
+    const end = start + TAU * 5 + (((goal - start) % TAU) + TAU) % TAU;
+    let dur = 3800;
+    try { if (matchMedia("(prefers-reduced-motion: reduce)").matches) dur = 1; } catch (e) {}
+    spinning = true; $("spin").disabled = true; $("result").textContent = "";
+    (function step(now) {
+      const p = Math.min(1, (now - t0) / dur), e = 1 - Math.pow(1 - p, 4);
+      rot = start + (end - start) * e; draw();
+      if (p < 1) return requestAnimationFrame(step);
+      rot = end % (2 * Math.PI); spinning = false; $("spin").disabled = false;
+      lastPick = items[i]; showPick(items[i], M.remaining(profile, eaten()).left);
+      store.set("yaspii-meal-last", { date: today, id: items[i].id });
+    })(t0);
+  }
+
+  document.querySelectorAll("[data-sex]").forEach(b => b.addEventListener("click", () => { sex = b.dataset.sex; showProfile(true); }));
+  $("pform").addEventListener("submit", e => {
+    e.preventDefault();
+    const p = { sex, age: +$("age").value, heightCm: +$("height").value, weightKg: +$("weight").value };
+    if (!sex) { $("perr").textContent = t("errSex"); return; }
+    if (!M.validProfile(p)) { $("perr").textContent = t("errNum"); return; }
+    $("perr").textContent = ""; profile = p; store.set("yaspii-meal-profile", p); showProfile(false); refresh();
+  });
+  $("edit").addEventListener("click", () => showProfile(true));
+  $("eaten").addEventListener("input", () => { store.set("yaspii-meal-eaten", { date: today, kcal: eaten() }); lastPick = null; refresh(); });
+  $("spin").addEventListener("click", spin);
+  document.querySelectorAll("[data-lang]").forEach(b => b.addEventListener("click", () => { try { localStorage.setItem("yaspii-lang", b.dataset.lang); } catch (e) {} setLang(b.dataset.lang); }));
+
+  const saved = store.get("yaspii-meal-eaten");
+  if (saved && saved.date === today) $("eaten").value = saved.kcal || "";
+  let start = null;
+  try { start = new URLSearchParams(location.search).get("lang") || localStorage.getItem("yaspii-lang"); } catch (e) {}
+  if (!T[start]) { const n = (navigator.language || "en").toLowerCase(); start = n.startsWith("zh") ? "zh" : n.startsWith("th") ? "th" : "en"; }
+  showProfile(!profile);
+  setLang(start);
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(draw);
+})();
+</script>
+</body>
+</html>
