@@ -141,6 +141,34 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:16px;justify-content:space-between;
 @keyframes mvSun{to{translate:0 16px}}
 @keyframes mvLanes{to{translate:-100px 0}}
 @media (prefers-reduced-motion:reduce){.moves svg *{animation:none!important}}
+/* campaign gallery (data in campaign.js) */
+.cp-head{display:flex;justify-content:space-between;align-items:end;gap:20px;flex-wrap:wrap}
+.cp-lede{color:var(--muted);max-width:52ch;margin:14px 0 0}
+.cp-nav{display:flex;gap:8px}
+.cp-nav button{width:48px;height:48px;border-radius:50%;border:1px solid var(--ink);background:none;color:var(--ink);font-size:20px;cursor:pointer}
+.cp-nav button:hover{background:var(--ink);color:var(--bg)}
+.cp-track{list-style:none;margin:32px 0 0;padding:0 0 8px;display:grid;grid-auto-flow:column;grid-auto-columns:clamp(240px,27vw,340px);gap:16px;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:thin}
+.cp-item{scroll-snap-align:start;margin:0}
+.cp-open{display:block;width:100%;padding:0;border:0;background:var(--surface);border-radius:10px;overflow:hidden;cursor:zoom-in}
+.cp-open img{display:block;width:100%;height:auto;aspect-ratio:9/16;object-fit:cover;transition:transform .5s ease}
+.cp-open:hover img{transform:scale(1.03)}
+.cp-ph{aspect-ratio:9/16;border-radius:10px;border:1.5px dashed var(--line);background:var(--surface);display:flex;flex-direction:column;justify-content:flex-end;padding:20px;gap:6px}
+.cp-ph-sport{font-family:var(--display);font-weight:800;font-size:clamp(34px,4vw,48px);line-height:1;letter-spacing:-.02em;color:var(--ink);opacity:.35;text-transform:uppercase}
+.cp-ph-note{font-family:var(--mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.cp-cap{font-family:var(--mono);font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin:10px 0 0}
+.cp-film{margin-top:40px;border-radius:10px;overflow:hidden;background:var(--ink);color:var(--bg);aspect-ratio:16/9}
+.cp-film:not(.has-film){aspect-ratio:21/9}
+@media (max-width:640px){.cp-film:not(.has-film){aspect-ratio:16/9}}
+.cp-film video{display:block;width:100%;height:100%;object-fit:cover}
+.cp-film-ph{height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;text-align:center;padding:16px}
+.cp-film-ph svg{width:64px;height:64px;color:#E2A72E}
+.cp-film-t{font-family:var(--display);font-weight:800;font-size:clamp(26px,4vw,44px);letter-spacing:-.02em}
+.cp-film-s{font-family:var(--mono);font-size:12px;letter-spacing:.1em;text-transform:uppercase;opacity:.75}
+.cp-dialog{border:0;padding:0;background:transparent;max-width:min(92vw,560px);max-height:92vh}
+.cp-dialog::backdrop{background:rgba(10,24,19,.86)}
+.cp-dialog img{display:block;max-width:100%;max-height:88vh;width:auto;height:auto;border-radius:8px;margin:0 auto}
+.cp-close{position:fixed;top:16px;right:16px;width:48px;height:48px;border-radius:50%;border:0;background:#F1EAD8;color:#173F33;font-size:22px;cursor:pointer}
+@media (prefers-reduced-motion:reduce){.cp-open img{transition:none}.cp-open:hover img{transform:none}}
 </style>
 </head>
 <body>
@@ -175,6 +203,18 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:16px;justify-content:space-between;
   <div><b data-i18n="spec.fitv">Asian</b><small data-i18n="spec.fit">Fit block & sizing</small></div>
 </div></div>
 
+<section class="campaign" id="campaign"><div class="wrap">
+<div class="cp-head"><div>
+<div class="eyebrow" data-i18n="cp.eyebrow">Campaign 01 · In the heat</div>
+<h2 data-i18n="cp.h2">Made to move at 32°C.</h2>
+<p class="cp-lede" data-i18n="cp.p">Early runs through Bangkok, long rides by the sea. The first pictures from our campaign, with more sports on the way.</p>
+</div>
+<div class="cp-nav"><button type="button" id="cp-prev" aria-label="Previous photos">←</button><button type="button" id="cp-next" aria-label="Next photos">→</button></div></div>
+<ul class="cp-track" id="cp-track"></ul>
+<div class="cp-film" id="cp-film"></div>
+</div>
+<dialog class="cp-dialog" id="cp-dialog"><button type="button" class="cp-close" aria-label="Close">✕</button><img alt=""></dialog>
+</section>
 <section><div class="wrap">
   <div class="eyebrow" data-i18n="fix.eyebrow">What we are fixing</div>
   <h2 data-i18n="fix.h2">Three things your leggings get wrong after one humid month.</h2>
@@ -310,6 +350,7 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:16px;justify-content:space-between;
 <script src="lang-th.js"></script>
 <script src="i18n.js"></script>
 <script src="film.js" defer></script>
+<script src="campaign.js" defer></script>
 <script>
 // Set FORM_ENDPOINT to a form service URL (e.g. Formspree) once the site is hosted.
 const FORM_ENDPOINT = "";
