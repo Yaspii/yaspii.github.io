@@ -18,7 +18,11 @@
       alt: { en: "A tennis player in a green Yaspii dress tossing the ball to serve",
              zh: "穿绿色 Yaspii 网球裙、抛球准备发球的女生",
              th: "นักเทนนิสสวมชุดเดรส Yaspii สีเขียวกำลังโยนลูกเพื่อเสิร์ฟ" } },
-    { type: "soon", label: { en: "Trail", zh: "徒步", th: "เดินป่า" } },
+    { type: "image", src: "img/trail-inthanon-720.webp", w: 720, h: 1280,
+      label: { en: "Trail · Doi Inthanon, 2,565 m", zh: "徒步 · 因他暖山 2565 米", th: "เดินป่า · ดอยอินทนนท์ 2,565 ม." },
+      alt: { en: "A hiker in a green Yaspii rain jacket and black leggings climbing a misty mountain trail",
+             zh: "雾中山道上，穿绿色 Yaspii 冲锋衣和黑色紧身裤攀登的女生",
+             th: "นักเดินป่าสวมแจ็กเก็ต Yaspii สีเขียวและเลกกิ้งสีดำปีนเส้นทางบนภูเขาท่ามกลางหมอก" } },
     { type: "soon", label: { en: "Yoga", zh: "瑜伽", th: "โยคะ" } }
   ];
   const FILM = null; /* e.g. { src: "video/yaspii-film.mp4", poster: "img/film-poster.webp" } */
