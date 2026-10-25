@@ -1,70 +1,189 @@
-// Yaspii Meal Spin — pure logic + data. No DOM, so it can be reused in a WeChat mini program or a native app.
+/* Yaspii Thai Food Spin — data + logic only (no DOM), so the same file can be reused
+   in a WeChat mini program / React Native / native app later.
+   spice: 0 not spicy, 1 mild, 2 medium, 3 hot */
 (function (root) {
-  // Typical single-serving estimates (kcal). Rough on purpose; portions vary a lot.
   const DISHES = [
-    { id: "somtam", kcal: 130, name: { en: "Som Tam (papaya salad)", zh: "青木瓜沙拉", th: "ส้มตำ" } },
-    { id: "tomyum", kcal: 160, name: { en: "Tom Yum Goong (clear)", zh: "冬阴功汤（清汤）", th: "ต้มยำกุ้งน้ำใส" } },
-    { id: "gaengsom", kcal: 200, name: { en: "Gaeng Som (sour curry)", zh: "酸咖喱鱼汤", th: "แกงส้ม" } },
-    { id: "yamwoonsen", kcal: 240, name: { en: "Yam Woon Sen (glass noodle salad)", zh: "凉拌粉丝", th: "ยำวุ้นเส้น" } },
-    { id: "larbgai", kcal: 250, name: { en: "Larb Gai (minced chicken salad)", zh: "泰式鸡肉末沙拉", th: "ลาบไก่" } },
-    { id: "plamanao", kcal: 280, name: { en: "Pla Neung Manao (steamed lime fish)", zh: "柠檬蒸鱼", th: "ปลานึ่งมะนาว" } },
-    { id: "jok", kcal: 300, name: { en: "Jok (rice porridge)", zh: "泰式米粥", th: "โจ๊ก" } },
-    { id: "gaiyang", kcal: 320, name: { en: "Gai Yang (grilled chicken)", zh: "泰式烤鸡", th: "ไก่ย่าง" } },
-    { id: "boatnoodle", kcal: 350, name: { en: "Kuay Teow Reua (boat noodles)", zh: "船面", th: "ก๋วยเตี๋ยวเรือ" } },
-    { id: "satay", kcal: 360, name: { en: "Satay Gai (chicken satay)", zh: "沙爹鸡肉串", th: "สะเต๊ะไก่" } },
-    { id: "tomkha", kcal: 380, name: { en: "Tom Kha Gai (coconut chicken soup)", zh: "椰汁鸡汤", th: "ต้มข่าไก่" } },
-    { id: "mango", kcal: 450, name: { en: "Mango Sticky Rice", zh: "芒果糯米饭", th: "ข้าวเหนียวมะม่วง" } },
-    { id: "kaijeow", kcal: 500, name: { en: "Kai Jeow (Thai omelette) with rice", zh: "泰式煎蛋饭", th: "ข้าวไข่เจียว" } },
-    { id: "khaopad", kcal: 560, name: { en: "Khao Pad (fried rice)", zh: "泰式炒饭", th: "ข้าวผัด" } },
-    { id: "padthai", kcal: 600, name: { en: "Pad Thai", zh: "泰式炒河粉", th: "ผัดไทย" } },
-    { id: "greencurry", kcal: 600, name: { en: "Green Curry with rice", zh: "绿咖喱鸡饭", th: "ข้าวแกงเขียวหวาน" } },
-    { id: "khaomangai", kcal: 610, name: { en: "Khao Man Gai (chicken rice)", zh: "海南鸡饭", th: "ข้าวมันไก่" } },
-    { id: "padseeew", kcal: 620, name: { en: "Pad See Ew", zh: "泰式酱油炒粉", th: "ผัดซีอิ๊ว" } },
-    { id: "khaosoi", kcal: 650, name: { en: "Khao Soi", zh: "泰北咖喱面", th: "ข้าวซอย" } },
-    { id: "kraprao", kcal: 680, name: { en: "Pad Kra Pao with rice and egg", zh: "打抛猪饭配煎蛋", th: "ผัดกะเพราข้าวไข่ดาว" } },
-    { id: "massaman", kcal: 750, name: { en: "Massaman Curry with rice", zh: "马沙文咖喱饭", th: "ข้าวแกงมัสมั่น" } }
+    { id: "pad-thai", th: "ผัดไทย", rom: "Pad Thai", en: "Pad Thai", zh: "泰式炒河粉", spice: 0,
+      d: { en: "Rice noodles wok-fried with tamarind, egg, tofu and bean sprouts, topped with crushed peanuts.",
+           zh: "米粉加罗望子酱、鸡蛋、豆腐和豆芽大火快炒，撒上花生碎。",
+           th: "เส้นจันท์ผัดกับซอสมะขาม ไข่ เต้าหู้ และถั่วงอก โรยถั่วลิสงคั่ว" } },
+    { id: "tom-yum-goong", th: "ต้มยำกุ้ง", rom: "Tom Yum Goong", en: "Tom Yum Goong", zh: "冬阴功汤", spice: 3,
+      d: { en: "Hot and sour prawn soup with lemongrass, galangal, kaffir lime leaf and chili.",
+           zh: "酸辣鲜虾汤，香茅、南姜、青柠叶和辣椒一起熬出来的味道。",
+           th: "ต้มยำรสจัดใส่กุ้ง หอมตะไคร้ ข่า ใบมะกรูด และพริก" } },
+    { id: "som-tam", th: "ส้มตำ", rom: "Som Tam", en: "Green Papaya Salad", zh: "青木瓜沙拉", spice: 3,
+      d: { en: "Shredded green papaya pounded with lime, chili, fish sauce, tomato and peanuts.",
+           zh: "青木瓜丝在石臼里和青柠、辣椒、鱼露、番茄、花生一起捣拌。",
+           th: "มะละกอสับตำกับมะนาว พริก น้ำปลา มะเขือเทศ และถั่วลิสง" } },
+    { id: "green-curry", th: "แกงเขียวหวาน", rom: "Gaeng Khiao Wan", en: "Green Curry", zh: "绿咖喱", spice: 2,
+      d: { en: "Coconut curry made with fresh green chili, Thai basil and round eggplant.",
+           zh: "用新鲜青辣椒做的椰浆咖喱，配泰国罗勒和圆茄子。",
+           th: "แกงกะทิพริกเขียวสด ใส่ใบโหระพาและมะเขือเปราะ" } },
+    { id: "massaman", th: "แกงมัสมั่น", rom: "Gaeng Massaman", en: "Massaman Curry", zh: "马沙文咖喱", spice: 1,
+      d: { en: "A mild, rich curry with potato, peanuts and warm spices like cinnamon and cardamom.",
+           zh: "温和浓郁的咖喱，有土豆、花生，带肉桂和小豆蔻的香气。",
+           th: "แกงรสกลมกล่อม ใส่มันฝรั่ง ถั่วลิสง และเครื่องเทศหอมอย่างอบเชยและกระวาน" } },
+    { id: "kra-pao", th: "ผัดกะเพรา", rom: "Pad Kra Pao", en: "Holy Basil Stir-fry", zh: "打抛饭", spice: 2,
+      d: { en: "Minced meat stir-fried with holy basil, garlic and chili, over rice with a crispy fried egg.",
+           zh: "肉末和打抛叶、蒜、辣椒同炒，盖在米饭上，再加一个煎蛋。",
+           th: "เนื้อสับผัดใบกะเพรา กระเทียม พริก ราดข้าว โปะไข่ดาวกรอบ" } },
+    { id: "khao-man-gai", th: "ข้าวมันไก่", rom: "Khao Man Gai", en: "Thai Chicken Rice", zh: "海南鸡饭", spice: 0,
+      d: { en: "Poached chicken over rice cooked in chicken broth, with a ginger-soybean sauce.",
+           zh: "白切鸡配鸡汤煮的米饭，蘸姜蓉黄豆酱。",
+           th: "ไก่ต้มบนข้าวหุงน้ำซุปไก่ ทานกับน้ำจิ้มเต้าเจี้ยวขิง" } },
+    { id: "khao-soi", th: "ข้าวซอย", rom: "Khao Soi", en: "Khao Soi", zh: "泰北咖喱面", spice: 2,
+      d: { en: "Northern Thai curry noodle soup, topped with crispy fried noodles and pickled mustard greens.",
+           zh: "泰北的椰香咖喱汤面，上面铺一把炸脆面，配酸菜。",
+           th: "บะหมี่น้ำแกงกะทิแบบเหนือ โรยหมี่กรอบ ทานกับผักกาดดอง" } },
+    { id: "tom-kha-gai", th: "ต้มข่าไก่", rom: "Tom Kha Gai", en: "Coconut Chicken Soup", zh: "椰汁鸡汤", spice: 1,
+      d: { en: "Creamy coconut milk soup with chicken, galangal, lemongrass and lime.",
+           zh: "椰奶鸡汤，南姜和香茅提香，最后挤青柠。",
+           th: "ต้มกะทิใส่ไก่ หอมข่า ตะไคร้ บีบมะนาว" } },
+    { id: "larb", th: "ลาบ", rom: "Larb", en: "Larb", zh: "泰式肉末沙拉", spice: 3,
+      d: { en: "Minced meat salad from Isan with toasted rice powder, mint, shallot, lime and chili.",
+           zh: "东北伊森风味的肉末沙拉，有炒米粉、薄荷、红葱、青柠和辣椒。",
+           th: "ลาบอีสาน คลุกข้าวคั่ว ใบสะระแหน่ หอมแดง มะนาว และพริก" } },
+    { id: "mango-sticky-rice", th: "ข้าวเหนียวมะม่วง", rom: "Khao Niao Mamuang", en: "Mango Sticky Rice", zh: "芒果糯米饭", spice: 0,
+      d: { en: "Sweet sticky rice with ripe mango and salty-sweet coconut cream.",
+           zh: "香甜糯米配熟芒果，淋上咸甜的椰浆。",
+           th: "ข้าวเหนียวมูนกับมะม่วงสุก ราดหัวกะทิ" } },
+    { id: "pad-see-ew", th: "ผัดซีอิ๊ว", rom: "Pad See Ew", en: "Pad See Ew", zh: "泰式酱油炒河粉", spice: 0,
+      d: { en: "Wide rice noodles wok-fried with dark soy sauce, egg and Chinese broccoli.",
+           zh: "宽河粉加黑酱油、鸡蛋和芥兰大火炒香。",
+           th: "เส้นใหญ่ผัดซีอิ๊วดำ ไข่ และผักคะน้า" } },
+    { id: "khao-pad", th: "ข้าวผัด", rom: "Khao Pad", en: "Thai Fried Rice", zh: "泰式炒饭", spice: 0,
+      d: { en: "Fried rice with egg and onion, served with lime, cucumber and chili fish sauce.",
+           zh: "鸡蛋洋葱炒饭，配青柠、黄瓜和辣椒鱼露。",
+           th: "ข้าวผัดไข่และหอมใหญ่ เสิร์ฟพร้อมมะนาว แตงกวา และพริกน้ำปลา" } },
+    { id: "gai-yang", th: "ไก่ย่าง", rom: "Gai Yang", en: "Grilled Chicken", zh: "泰式烤鸡", spice: 1,
+      d: { en: "Marinated chicken grilled over charcoal, eaten with sticky rice and a tangy chili dip.",
+           zh: "腌过的鸡肉用炭火烤，配糯米饭和酸辣蘸酱。",
+           th: "ไก่หมักย่างเตาถ่าน ทานกับข้าวเหนียวและน้ำจิ้มแจ่ว" } },
+    { id: "moo-ping", th: "หมูปิ้ง", rom: "Moo Ping", en: "Grilled Pork Skewers", zh: "烤猪肉串", spice: 0,
+      d: { en: "Sweet, garlicky pork skewers grilled on the street, a classic breakfast with sticky rice.",
+           zh: "街边炭烤的甜味蒜香猪肉串，配糯米饭是经典早餐。",
+           th: "หมูหมักกระเทียมปิ้งหอม ๆ ทานกับข้าวเหนียวเป็นมื้อเช้า" } },
+    { id: "panang", th: "แกงพะแนง", rom: "Gaeng Panang", en: "Panang Curry", zh: "帕能咖喱", spice: 2,
+      d: { en: "A thick, slightly sweet red curry finished with shredded kaffir lime leaf.",
+           zh: "浓稠微甜的红咖喱，最后撒上青柠叶丝。",
+           th: "แกงข้นรสหวานนิด ๆ โรยใบมะกรูดซอย" } },
+    { id: "red-curry-duck", th: "แกงเผ็ดเป็ดย่าง", rom: "Gaeng Phet Ped Yang", en: "Red Curry with Roast Duck", zh: "红咖喱烤鸭", spice: 2,
+      d: { en: "Roast duck in red coconut curry with pineapple, cherry tomato and Thai basil.",
+           zh: "烤鸭放进红咖喱椰汁里，配菠萝、小番茄和罗勒。",
+           th: "เป็ดย่างในแกงเผ็ดกะทิ ใส่สับปะรด มะเขือเทศ และใบโหระพา" } },
+    { id: "yum-woon-sen", th: "ยำวุ้นเส้น", rom: "Yum Woon Sen", en: "Glass Noodle Salad", zh: "凉拌粉丝", spice: 2,
+      d: { en: "Glass noodles tossed with shrimp, minced pork, lime, chili and celery.",
+           zh: "粉丝拌鲜虾、肉末、青柠、辣椒和芹菜。",
+           th: "วุ้นเส้นยำกับกุ้ง หมูสับ มะนาว พริก และขึ้นฉ่าย" } },
+    { id: "pla-neung-manao", th: "ปลากะพงนึ่งมะนาว", rom: "Pla Kapong Neung Manao", en: "Steamed Sea Bass with Lime", zh: "柠檬蒸鲈鱼", spice: 2,
+      d: { en: "Whole sea bass steamed in a sharp lime, garlic and chili broth.",
+           zh: "整条鲈鱼浸在青柠、蒜和辣椒的酸辣汤汁里蒸熟。",
+           th: "ปลากะพงทั้งตัวนึ่งในน้ำมะนาว กระเทียม และพริก" } },
+    { id: "boat-noodles", th: "ก๋วยเตี๋ยวเรือ", rom: "Kuay Teow Ruea", en: "Boat Noodles", zh: "船面", spice: 1,
+      d: { en: "Small bowls of rich, dark, herbal noodle soup, once sold from boats on the canals.",
+           zh: "小碗装的浓郁深色汤面，以前在运河的小船上卖。",
+           th: "ก๋วยเตี๋ยวน้ำข้นชามเล็ก เดิมขายบนเรือในคลอง" } },
+    { id: "rad-na", th: "ราดหน้า", rom: "Rad Na", en: "Rad Na", zh: "泰式勾芡河粉", spice: 0,
+      d: { en: "Charred wide noodles under a silky gravy with Chinese broccoli and meat.",
+           zh: "煎香的宽河粉，浇上滑嫩的芥兰肉片芡汁。",
+           th: "เส้นใหญ่ผัดหอมกระทะ ราดน้ำผักคะน้าข้น ๆ กับเนื้อสัตว์" } },
+    { id: "hoy-tod", th: "หอยทอด", rom: "Hoy Tod", en: "Crispy Mussel Omelette", zh: "泰式蚝煎", spice: 0,
+      d: { en: "Mussels or oysters fried into a crispy batter with egg, served on bean sprouts.",
+           zh: "青口或生蚝裹面糊加鸡蛋煎脆，铺在豆芽上。",
+           th: "หอยแมลงภู่หรือหอยนางรมทอดกับแป้งและไข่จนกรอบ เสิร์ฟบนถั่วงอก" } },
+    { id: "kai-jeow", th: "ข้าวไข่เจียว", rom: "Khao Kai Jeow", en: "Thai Omelette on Rice", zh: "泰式煎蛋饭", spice: 0,
+      d: { en: "A puffy, crispy-edged omelette over rice, eaten with sriracha. Simple and loved.",
+           zh: "蓬松、边缘酥脆的煎蛋盖在饭上，配是拉差辣酱，简单又受欢迎。",
+           th: "ไข่เจียวฟูกรอบบนข้าวสวย ราดซอสพริก ง่ายแต่ใคร ๆ ก็ชอบ" } },
+    { id: "gaeng-som", th: "แกงส้ม", rom: "Gaeng Som", en: "Sour Curry", zh: "酸咖喱", spice: 2,
+      d: { en: "A tangy, brothy curry with fish and vegetables, soured with tamarind.",
+           zh: "用罗望子调酸的清汤咖喱，有鱼和蔬菜。",
+           th: "แกงน้ำใสรสเปรี้ยวจากมะขาม ใส่ปลาและผัก" } },
+    { id: "nam-tok-moo", th: "น้ำตกหมู", rom: "Nam Tok Moo", en: "Grilled Pork Salad", zh: "泰式烤猪肉沙拉", spice: 3,
+      d: { en: "Sliced grilled pork tossed with lime, chili, mint and toasted rice powder.",
+           zh: "烤猪肉切片，拌青柠、辣椒、薄荷和炒米粉。",
+           th: "หมูย่างหั่นชิ้น คลุกมะนาว พริก ใบสะระแหน่ และข้าวคั่ว" } },
+    { id: "sai-ua", th: "ไส้อั่ว", rom: "Sai Ua", en: "Northern Herb Sausage", zh: "清迈香肠", spice: 1,
+      d: { en: "A grilled Chiang Mai sausage packed with lemongrass, kaffir lime and curry paste.",
+           zh: "清迈烤香肠，里面有香茅、青柠叶和咖喱酱。",
+           th: "ไส้อั่วเชียงใหม่ย่าง หอมตะไคร้ ใบมะกรูด และพริกแกง" } },
+    { id: "pad-pak-boong", th: "ผัดผักบุ้งไฟแดง", rom: "Pad Pak Boong Fai Daeng", en: "Stir-fried Morning Glory", zh: "炒空心菜", spice: 1,
+      d: { en: "Morning glory flash-fried over high flame with garlic, chili and soybean paste.",
+           zh: "空心菜加蒜、辣椒和黄豆酱，猛火快炒。",
+           th: "ผักบุ้งผัดไฟแดงกับกระเทียม พริก และเต้าเจี้ยว" } },
+    { id: "tod-mun-pla", th: "ทอดมันปลา", rom: "Tod Mun Pla", en: "Thai Fish Cakes", zh: "泰式鱼饼", spice: 1,
+      d: { en: "Bouncy fried fish cakes with red curry paste and long beans, with a cucumber dip.",
+           zh: "弹牙的炸鱼饼，加红咖喱酱和豆角，配黄瓜蘸酱。",
+           th: "ทอดมันปลาเด้ง ๆ ใส่พริกแกงและถั่วฝักยาว ทานกับอาจาด" } },
+    { id: "satay", th: "สะเต๊ะ", rom: "Satay", en: "Satay", zh: "沙爹串", spice: 0,
+      d: { en: "Turmeric-marinated skewers grilled and served with peanut sauce and cucumber relish.",
+           zh: "姜黄腌过的肉串烤香，配花生酱和黄瓜小菜。",
+           th: "เนื้อหมักขมิ้นเสียบไม้ย่าง ทานกับน้ำจิ้มถั่วและอาจาด" } },
+    { id: "jok", th: "โจ๊ก", rom: "Jok", en: "Rice Porridge", zh: "泰式米粥", spice: 0,
+      d: { en: "Silky rice porridge with pork balls, ginger and a soft egg, a gentle morning bowl.",
+           zh: "绵滑的米粥，加猪肉丸、姜丝和半熟蛋，适合早上来一碗。",
+           th: "โจ๊กเนื้อเนียน ใส่หมูเด้ง ขิง และไข่ลวก อุ่นท้องยามเช้า" } },
+    { id: "khao-kha-moo", th: "ข้าวขาหมู", rom: "Khao Kha Moo", en: "Braised Pork Leg Rice", zh: "猪脚饭", spice: 0,
+      d: { en: "Slow-braised pork leg over rice with pickled mustard greens and a boiled egg.",
+           zh: "慢炖猪脚盖饭，配酸菜和卤蛋。",
+           th: "ขาหมูพะโล้ตุ๋นนุ่มบนข้าว ทานกับผักกาดดองและไข่ต้ม" } },
+    { id: "noodles-tom-yum", th: "ก๋วยเตี๋ยวต้มยำ", rom: "Kuay Teow Tom Yum", en: "Tom Yum Noodle Soup", zh: "冬阴功粉", spice: 2,
+      d: { en: "Noodle soup in a hot, sour and slightly sweet broth with ground peanuts.",
+           zh: "酸辣微甜的汤底煮米粉，撒上花生碎。",
+           th: "ก๋วยเตี๋ยวน้ำต้มยำ รสเปรี้ยวเผ็ดหวาน โรยถั่วป่น" } },
+    { id: "poo-pad-pong-karee", th: "ปูผัดผงกะหรี่", rom: "Poo Pad Pong Karee", en: "Curry Crab", zh: "咖喱炒蟹", spice: 1,
+      d: { en: "Crab stir-fried with curry powder, egg and celery into a soft, golden sauce.",
+           zh: "螃蟹和咖喱粉、鸡蛋、芹菜同炒，酱汁金黄滑嫩。",
+           th: "ปูผัดกับผงกะหรี่ ไข่ และขึ้นฉ่าย ได้ซอสสีทองนุ่ม ๆ" } },
+    { id: "miang-kham", th: "เมี่ยงคำ", rom: "Miang Kham", en: "Leaf-wrapped Bites", zh: "叶包小食", spice: 1,
+      d: { en: "Wild betel leaves wrapped around lime, ginger, shallot, peanuts and toasted coconut.",
+           zh: "用野胡椒叶包住青柠、姜、红葱、花生和烤椰丝，一口一个。",
+           th: "ใบชะพลูห่อมะนาว ขิง หอมแดง ถั่วลิสง และมะพร้าวคั่ว" } },
+    { id: "khanom-jeen-nam-ngiao", th: "ขนมจีนน้ำเงี้ยว", rom: "Khanom Jeen Nam Ngiao", en: "Northern Rice Noodles", zh: "泰北番茄米线", spice: 1,
+      d: { en: "Fresh rice noodles in a northern tomato and pork broth.",
+           zh: "新鲜米线配泰北番茄猪肉汤。",
+           th: "ขนมจีนราดน้ำเงี้ยวแบบเหนือ ใส่มะเขือเทศและหมู" } },
+    { id: "cashew-chicken", th: "ไก่ผัดเม็ดมะม่วงหิมพานต์", rom: "Gai Pad Med Mamuang", en: "Cashew Chicken", zh: "腰果炒鸡", spice: 1,
+      d: { en: "Chicken stir-fried with cashews, dried chili, onion and spring onion.",
+           zh: "鸡肉和腰果、干辣椒、洋葱、葱段一起炒。",
+           th: "ไก่ผัดกับเม็ดมะม่วงหิมพานต์ พริกแห้ง หอมใหญ่ และต้นหอม" } },
+    { id: "bua-loy", th: "บัวลอย", rom: "Bua Loy", en: "Rice Balls in Coconut Milk", zh: "椰奶汤圆", spice: 0,
+      d: { en: "Chewy little rice flour balls in warm, lightly salted coconut milk.",
+           zh: "软糯的小糯米团，泡在微咸的温椰奶里。",
+           th: "แป้งข้าวเหนียวปั้นก้อนเล็กในน้ำกะทิอุ่น ๆ" } },
+    { id: "khanom-krok", th: "ขนมครก", rom: "Khanom Krok", en: "Coconut Rice Pancakes", zh: "椰子小煎饼", spice: 0,
+      d: { en: "Small coconut-rice cups, crispy outside and custardy inside, cooked in a dimpled pan.",
+           zh: "在带圆坑的锅里煎出来的椰香小饼，外脆里嫩。",
+           th: "ขนมกะทิในกระทะหลุม กรอบนอก นุ่มใน" } },
+    { id: "cha-yen", th: "ชาเย็น", rom: "Cha Yen", en: "Thai Iced Tea", zh: "泰式奶茶", spice: 0,
+      d: { en: "Strong orange Thai tea poured over ice with sweetened condensed milk.",
+           zh: "浓郁的橙色泰式红茶，加炼乳和冰块。",
+           th: "ชาไทยสีส้มเข้มข้น ใส่นมข้นหวานและน้ำแข็ง" } },
+    { id: "tub-tim-grob", th: "ทับทิมกรอบ", rom: "Tub Tim Grob", en: "Red Rubies in Coconut Milk", zh: "红宝石椰奶", spice: 0,
+      d: { en: "Crunchy ruby-red water chestnut pieces in sweet coconut milk over crushed ice.",
+           zh: "裹了粉的红色马蹄粒，配甜椰奶和碎冰，口感脆爽。",
+           th: "แห้วชุบแป้งสีแดงกรอบ ๆ ในน้ำกะทิหวานกับน้ำแข็งใส" } }
   ];
 
-  const FLOOR = { female: 1200, male: 1500 };
-
-  // Mifflin–St Jeor resting energy, kcal/day.
-  function bmr(p) {
-    const base = 10 * p.weightKg + 6.25 * p.heightCm - 5 * p.age;
-    return Math.round(p.sex === "male" ? base + 5 : base - 161);
+  /* Shuffle-bag picker: every dish comes up once before any repeats,
+     and the first pick of a new round is never the last pick of the old one. */
+  function shuffle(a, rand) {
+    for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(rand() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; }
+    return a;
+  }
+  function next(bag, last, rand) {
+    rand = rand || Math.random;
+    const ids = DISHES.map(d => d.id);
+    bag = (bag || []).filter(id => ids.includes(id));
+    if (!bag.length) {
+      bag = shuffle(ids.slice(), rand);
+      if (bag.length > 1 && bag[0] === last) bag.push(bag.shift());
+    }
+    const id = bag.shift();
+    return { dish: DISHES.find(d => d.id === id), bag };
   }
 
-  // "Daily burn at rest": resting energy x 1.2 (sedentary). Deliberately conservative.
-  function dailyBurn(p) { return Math.round(bmr(p) * 1.2); }
-
-  // Small deficit: 15% of daily burn, at most 500 kcal, never below the floor, none for under-18s.
-  function dailyTarget(p) {
-    const burn = dailyBurn(p);
-    if (p.age < 18) return { burn, deficit: 0, target: burn };
-    const deficit = Math.min(500, Math.round(burn * 0.15));
-    const target = Math.max(FLOOR[p.sex] || 1200, burn - deficit);
-    return { burn, deficit: burn - target, target };
-  }
-
-  function remaining(p, eatenToday) {
-    const t = dailyTarget(p);
-    return { ...t, eaten: eatenToday, left: Math.max(0, t.target - eatenToday) };
-  }
-
-  // Dishes that fit what's left, up to `max`, spread across the calorie range.
-  function candidates(left, max = 8) {
-    const fit = DISHES.filter(d => d.kcal <= left);
-    if (fit.length <= max) return fit;
-    const out = [];
-    for (let i = 0; i < max; i++) out.push(fit[Math.round(i * (fit.length - 1) / (max - 1))]);
-    return out;
-  }
-
-  function validProfile(p) {
-    return p && (p.sex === "male" || p.sex === "female") &&
-      p.age >= 10 && p.age <= 100 && p.heightCm >= 100 && p.heightCm <= 230 && p.weightKg >= 25 && p.weightKg <= 300;
-  }
-
-  const api = { DISHES, bmr, dailyBurn, dailyTarget, remaining, candidates, validProfile };
-  if (typeof module !== "undefined" && module.exports) module.exports = api;
+  const api = { DISHES, next };
+  if (typeof module === "object" && module.exports) module.exports = api;
   else root.YaspiiMeal = api;
 })(typeof window !== "undefined" ? window : this);
