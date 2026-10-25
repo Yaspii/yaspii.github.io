@@ -13,7 +13,11 @@
       alt: { en: "A cyclist in a green Yaspii jersey and black bib shorts on a coastal road",
              zh: "海边公路上，穿绿色 Yaspii 骑行服骑车的女生",
              th: "นักปั่นสวมเสื้อปั่น Yaspii สีเขียวบนถนนเลียบชายฝั่ง" } },
-    { type: "soon", label: { en: "Tennis", zh: "网球", th: "เทนนิส" } },
+    { type: "image", src: "img/tennis-court-720.webp", w: 720, h: 1280,
+      label: { en: "Tennis · Match point", zh: "网球 · 赛点", th: "เทนนิส · แมตช์พอยต์" },
+      alt: { en: "A tennis player in a green Yaspii dress tossing the ball to serve",
+             zh: "穿绿色 Yaspii 网球裙、抛球准备发球的女生",
+             th: "นักเทนนิสสวมชุดเดรส Yaspii สีเขียวกำลังโยนลูกเพื่อเสิร์ฟ" } },
     { type: "soon", label: { en: "Trail", zh: "徒步", th: "เดินป่า" } },
     { type: "soon", label: { en: "Yoga", zh: "瑜伽", th: "โยคะ" } }
   ];
