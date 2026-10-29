@@ -23,9 +23,14 @@
       alt: { en: "A hiker in a green Yaspii rain jacket and black leggings climbing a misty mountain trail",
              zh: "雾中山道上，穿绿色 Yaspii 冲锋衣和黑色紧身裤攀登的女生",
              th: "นักเดินป่าสวมแจ็กเก็ต Yaspii สีเขียวและเลกกิ้งสีดำปีนเส้นทางบนภูเขาท่ามกลางหมอก" } },
-    { type: "soon", label: { en: "Yoga", zh: "瑜伽", th: "โยคะ" } }
+    { type: "image", src: "img/yoga-maechaem-720.webp", w: 720, h: 1280,
+      label: { en: "Yoga · Mae Chaem, 06:10", zh: "瑜伽 · 湄占梯田 清晨 6:10", th: "โยคะ · แม่แจ่ม 06:10 น." },
+      alt: { en: "A woman in a green Yaspii yoga set holding tree pose above rice terraces at sunrise",
+             zh: "日出时的梯田上，穿绿色 Yaspii 瑜伽套装做树式的女生",
+             th: "ผู้หญิงสวมชุดโยคะ Yaspii สีเขียวทำท่าต้นไม้เหนือนาขั้นบันไดยามพระอาทิตย์ขึ้น" } }
   ];
-  const FILM = null; /* e.g. { src: "video/yaspii-film.mp4", poster: "img/film-poster.webp" } */
+  const FILM = { src: "img/yaspii-film.mp4", poster: "img/film-poster.jpg" }; /* English subtitles are burned into the video */
+  const SUB_LABEL = { en: "English", zh: "中文", th: "ไทย" };
 
   const T = {
     en: { soon: "Photo coming soon", film: "Brand film", filmSoon: "Coming soon", prev: "Previous photos", next: "Next photos", close: "Close", open: "View larger" },
@@ -58,8 +63,19 @@
     document.getElementById("cp-next").setAttribute("aria-label", t.next);
     if (filmBox) {
       if (FILM) {
-        const v = el("video"); v.controls = true; v.playsInline = true; v.preload = "none"; v.poster = FILM.poster || ""; v.src = FILM.src;
-        filmBox.replaceChildren(v); filmBox.classList.add("has-film");
+        let v = filmBox.querySelector("video");
+        if (!v) {
+          v = el("video"); v.controls = true; v.playsInline = true; v.preload = "metadata"; v.poster = FILM.poster || ""; v.src = FILM.src;
+          v.setAttribute("aria-label", t.film);
+          for (const k of Object.keys(FILM.subs || {})) {
+            const tr = el("track"); tr.kind = "subtitles"; tr.srclang = k; tr.label = SUB_LABEL[k]; tr.src = FILM.subs[k]; tr.dataset.lang = k;
+            v.append(tr);
+          }
+          filmBox.replaceChildren(v); filmBox.classList.add("has-film");
+        }
+        v.setAttribute("aria-label", t.film);
+        /* Show subtitles in the page language; English VO + English page = subtitles still on for sound-off viewing. */
+        for (const tt of v.textTracks) tt.mode = tt.language === L ? "showing" : "disabled";
       } else {
         const ph = el("div", "cp-film-ph");
         const play = document.createElementNS("http://www.w3.org/2000/svg", "svg");
