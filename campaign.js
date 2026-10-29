@@ -23,7 +23,11 @@
       alt: { en: "A hiker in a green Yaspii rain jacket and black leggings climbing a misty mountain trail",
              zh: "雾中山道上，穿绿色 Yaspii 冲锋衣和黑色紧身裤攀登的女生",
              th: "นักเดินป่าสวมแจ็กเก็ต Yaspii สีเขียวและเลกกิ้งสีดำปีนเส้นทางบนภูเขาท่ามกลางหมอก" } },
-    { type: "soon", label: { en: "Yoga", zh: "瑜伽", th: "โยคะ" } }
+    { type: "image", src: "img/yoga-chiangmai-720.webp", w: 720, h: 1280,
+      label: { en: "Yoga · Mae Rim, 06:10", zh: "瑜伽 · 清迈湄林 清晨 6:10", th: "โยคะ · แม่ริม 06:10 น." },
+      alt: { en: "A woman in a green Yaspii yoga set with palms together in an open-air teak pavilion above the Chiang Mai rainforest",
+             zh: "清迈雨林中的柚木瑜伽亭里，穿绿色 Yaspii 瑜伽套装双手合十的女生",
+             th: "ผู้หญิงสวมชุดโยคะ Yaspii สีเขียวพนมมือในศาลาไม้สักกลางป่าเชียงใหม่" } }
   ];
   const FILM = { src: "img/yaspii-film.mp4", poster: "img/film-poster.jpg" }; /* English subtitles are burned into the video */
   const SUB_LABEL = { en: "English", zh: "中文", th: "ไทย" };
