@@ -50,7 +50,9 @@ nav .wrap{display:flex;justify-content:space-between;align-items:center;padding-
 .navlink{font-family:var(--mono);font-size:13px;letter-spacing:.06em;text-transform:uppercase;text-decoration:none;border-bottom:1px solid var(--ink);padding-bottom:2px}
 
 /* hero */
-.hero .wrap{padding-block:48px 56px;display:grid;gap:40px}
+.hero .wrap{padding-block:32px 48px;display:grid;gap:32px}
+.hero-text{display:grid;gap:28px;align-content:center}
+@media (min-width:1000px){.hero .wrap{grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);align-items:center;gap:48px}.hero h1{font-size:clamp(48px,5.4vw,80px)}.hero .hero-row{gap:20px}}
 .eyebrow{font-family:var(--mono);font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
 h1{font-family:var(--display);font-weight:800;font-size:clamp(46px,9vw,118px);line-height:.92;letter-spacing:-.035em;margin:14px 0 0;text-wrap:balance}
 h1 em{font-style:normal;color:var(--accent)}
@@ -166,6 +168,12 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:16px;justify-content:space-between;
 .cp-film-ph svg{width:64px;height:64px;color:#E2A72E}
 .cp-film-t{font-family:var(--display);font-weight:800;font-size:clamp(26px,4vw,44px);letter-spacing:-.02em}
 .cp-film-s{font-family:var(--mono);font-size:12px;letter-spacing:.1em;text-transform:uppercase;opacity:.75}
+.hf{position:relative;border-radius:10px;overflow:hidden;background:var(--ink)}
+.hf video{border-radius:0;background:var(--ink)}
+.hf-btn{position:absolute;bottom:14px;left:14px;min-height:44px;padding:10px 16px;border-radius:999px;border:0;background:rgba(15,42,34,.72);color:#F1EAD8;font:500 13px/1 var(--mono);letter-spacing:.06em;text-transform:uppercase;cursor:pointer;backdrop-filter:blur(6px)}
+.hf-btn:hover{background:#F1EAD8;color:#173F33}
+.hf-play{left:auto;right:14px}
+@media (min-width:900px){.cp-track{grid-auto-flow:row;grid-template-columns:repeat(5,minmax(0,1fr));grid-auto-columns:auto;overflow:visible}.cp-nav{display:none}}
 .cp-dialog{border:0;padding:0;background:transparent;max-width:min(92vw,560px);max-height:92vh}
 .cp-dialog::backdrop{background:rgba(10,24,19,.86)}
 .cp-dialog img{display:block;max-width:100%;max-height:88vh;width:auto;height:auto;border-radius:8px;margin:0 auto}
@@ -184,6 +192,7 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:16px;justify-content:space-between;
 </div></nav>
 
 <header class="hero" id="top"><div class="wrap">
+  <div class="hero-text">
   <div>
     <div class="eyebrow" data-i18n="hero.eyebrow">Activewear for the tropics · First drop in development</div>
     <h1 data-i18n-html="hero.h1">Made for <em>32°C</em> and 80% humidity.</h1>
@@ -192,11 +201,16 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:16px;justify-content:space-between;
     <p class="lede" data-i18n="hero.lede">Most activewear is designed for cool studios in Vancouver or London. Yaspii is designed for the air you actually train in: heavy, hot and wet.</p>
     <a class="btn" href="#join" data-i18n="hero.cta">Get early access →</a>
   </div>
+  </div>
+  <div class="hf">
+    <video class="hero-video" id="hero-film" muted loop playsinline preload="metadata" poster="img/film-poster.jpg" aria-label="Yaspii brand film">
+      <source src="img/yaspii-film.mp4" type="video/mp4">
+    </video>
+    <button type="button" class="hf-btn" id="hf-sound" aria-pressed="false"><span aria-hidden="true">♪</span> <span id="hf-sound-t">Sound on</span></button>
+    <button type="button" class="hf-btn hf-play" id="hf-play" aria-pressed="true"><span id="hf-play-t">Pause</span></button>
+  </div>
 </div></header>
 
-<div class="film"><div class="wrap">
-  <canvas class="hero-video" id="film" role="img" data-i18n-aria="film.aria" aria-label="Yaspii brand film: made for 32°C and 80% humidity"></canvas>
-</div></div>
 
 <div class="spec" aria-label="Design targets"><div class="wrap">
   <div><b>32°C</b><small data-i18n="spec.temp">Design air temp</small></div>
@@ -213,7 +227,6 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:16px;justify-content:space-between;
 </div>
 <div class="cp-nav"><button type="button" id="cp-prev" aria-label="Previous photos">←</button><button type="button" id="cp-next" aria-label="Next photos">→</button></div></div>
 <ul class="cp-track" id="cp-track"></ul>
-<div class="cp-film" id="cp-film"></div>
 </div>
 <dialog class="cp-dialog" id="cp-dialog"><button type="button" class="cp-close" aria-label="Close">✕</button><img alt=""></dialog>
 </section>
@@ -351,8 +364,25 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:16px;justify-content:space-between;
 <script src="lang-zh.js"></script>
 <script src="lang-th.js"></script>
 <script src="i18n.js"></script>
-<script src="film.js?v=20261029" defer></script>
-<script src="campaign.js?v=20261029" defer></script>
+<script src="campaign.js?v=20261029b" defer></script>
+<script>
+(function(){
+  var v=document.getElementById("hero-film"); if(!v) return;
+  var snd=document.getElementById("hf-sound"), pl=document.getElementById("hf-play");
+  var T={en:{on:"Sound on",off:"Sound off",pause:"Pause",play:"Play"},zh:{on:"打开声音",off:"关闭声音",pause:"暂停",play:"播放"},th:{on:"เปิดเสียง",off:"ปิดเสียง",pause:"หยุด",play:"เล่น"}};
+  function t(){return T[window.YASPII_LANG]||T.en}
+  function sync(){document.getElementById("hf-sound-t").textContent=v.muted?t().on:t().off;snd.setAttribute("aria-pressed",String(!v.muted));
+    document.getElementById("hf-play-t").textContent=v.paused?t().play:t().pause;pl.setAttribute("aria-pressed",String(!v.paused));}
+  snd.addEventListener("click",function(){v.muted=!v.muted;if(!v.muted){v.currentTime=0;v.play();}sync();});
+  pl.addEventListener("click",function(){if(v.paused)v.play();else v.pause();sync();});
+  v.addEventListener("play",sync);v.addEventListener("pause",sync);
+  document.addEventListener("yaspii:lang",sync);
+  var still=false;try{still=matchMedia("(prefers-reduced-motion: reduce)").matches}catch(e){}
+  if(!still&&"IntersectionObserver" in window){new IntersectionObserver(function(e){if(e[0].isIntersecting){if(v.muted)v.play().catch(function(){});}else if(v.muted){v.pause();}},{threshold:.35}).observe(v);}
+  sync();
+})();
+</script>
+
 <script>
 // Set FORM_ENDPOINT to a form service URL (e.g. Formspree) once the site is hosted.
 const FORM_ENDPOINT = "";
