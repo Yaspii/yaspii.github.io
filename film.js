@@ -23,6 +23,20 @@
   const rnd = () => (seed = (seed * 16807) % 2147483647) / 2147483647;
   const DROPS = Array.from({ length: 80 }, () => [60 + rnd() * (W - 120), 160 + rnd() * (H - 320), 5 + rnd() * 11, .6 + rnd() * .8, rnd() * 6.28]);
 
+
+  // Yaspii wordmark (YASPII + folded ear), font units: baseline y=0, width ~3279, cap height ~660.
+  const WM_L = [[0.0,"M251 0V203L4 660H198L329 347H335L466 660H658L413 205V0Z"],[632.0,"M14 0 238 660H474L698 0H522L485 124H227L190 0ZM453 232 364 534H348L259 232Z"],[1314.0,"M331 -14Q267 -14 215.0 -2.0Q163 10 125.0 34.5Q87 59 65.0 97.0Q43 135 39 185L180 232Q183 190 204.0 162.0Q225 134 260.5 120.5Q296 107 340 107Q382 107 410.5 117.5Q439 128 453.5 144.5Q468 161 468 180Q468 202 449.0 216.5Q430 231 397.0 241.5Q364 252 320 262Q270 274 222.0 288.0Q174 302 135.0 324.5Q96 347 73.5 382.5Q51 418 51 472Q51 533 82.0 578.0Q113 623 173.0 648.5Q233 674 321 674Q408 674 469.0 649.0Q530 624 563.0 579.5Q596 535 599 476L455 435Q455 464 445.5 486.0Q436 508 419.0 522.5Q402 537 377.0 544.5Q352 552 320 552Q282 552 255.5 543.0Q229 534 216.0 519.5Q203 505 203 486Q203 462 223.5 446.5Q244 431 279.5 420.5Q315 410 358 400Q401 391 447.0 377.5Q493 364 533.0 342.0Q573 320 597.5 282.5Q622 245 622 188Q622 127 589.5 81.5Q557 36 492.0 11.0Q427 -14 331 -14Z"],[1942.0,"M69 0V660H345Q409 660 460.5 645.0Q512 630 549.0 600.5Q586 571 605.5 525.5Q625 480 625 419Q625 341 589.5 288.0Q554 235 484.5 208.0Q415 181 311 181H230V0ZM230 537V305H334Q399 305 431.0 332.0Q463 359 463 423Q463 479 433.5 508.0Q404 537 340 537Z"],[2566.0,"M69 0V660H233V0Z"],[2839.0,"M69 0V660H233V0Z"]], WM_EAR = "M116 50 C100 28 68 32 62 52 C60 61 69 63 76 58 C86 51 100 56 109 68 Z";
+  let WMP = null;
+  function wordmark(x, y, k, color, alpha) {          // x = left edge, y = baseline, k = px per font unit
+    if (alpha <= 0 || typeof Path2D === "undefined") return;
+    if (!WMP) WMP = { l: WM_L.map(([tx, d]) => [tx, new Path2D(d)]), e: new Path2D(WM_EAR) };
+    ctx.save(); ctx.globalAlpha = alpha; ctx.fillStyle = color; ctx.translate(x, y); ctx.scale(k, k);
+    ctx.save(); ctx.scale(1, -1); WMP.l.forEach(([tx, p]) => { ctx.save(); ctx.translate(tx, 0); ctx.fill(p); ctx.restore(); }); ctx.restore();
+    ctx.translate(3014.6, -764); ctx.scale(9.0786, 9.0786); ctx.translate(-89, -68); ctx.fill(WMP.e);
+    ctx.restore();
+  }
+  const WM_W = 3279;
+
   function txt(s, x, y, font, color, alpha, align = "left", base = "top", track = 0) {
     if (alpha <= 0) return;
     ctx.save();
@@ -119,14 +133,8 @@
     }
 
     if (t > 12.6) {                                  // scene 4: end card
-      const k = eo(pr(t, 12.7, 13.4)), f = D(200), ww = width("yaspii", f), r = 26;
-      const cx = W / 2 - (ww + r * 2 + 10) / 2, y = 520 + 50 * (1 - k);
-      txt("yaspii", cx, y, f, C.ink, k, "left", "alphabetic");
-      const dk = eo(pr(t, 13.1, 13.6));
-      if (dk > 0) {
-        const R = r * (.4 + .6 * dk);
-        ctx.fillStyle = C.amber; ctx.beginPath(); ctx.arc(cx + ww + 10 + r, y - 4 - R, R, 0, 7); ctx.fill();
-      }
+      const k = eo(pr(t, 12.7, 13.4)), s = .19, y = 520 + 50 * (1 - k);
+      wordmark(W / 2 - WM_W * s / 2, y, s, C.ink, k);
       const k2 = eo(pr(t, 13.4, 14));
       if (k2 > 0) {
         txt(L().sub, W / 2, 620, MONO(30), C.muted, k2, "center", "middle", 4);
@@ -138,7 +146,7 @@
 
     if (t < 12.4) {                                  // corner marks
       const dark = wipe > .5;
-      txt("yaspii", M, 110, D(44), dark ? C.pale : C.ink, 1, "left", "alphabetic");
+      wordmark(M, 110, .036, dark ? C.pale : C.ink, 1);
       txt("DROP 01", W - M, 110, MONO(30), dark ? C.amberL : C.amber, 1, "right", "alphabetic");
     }
   }
