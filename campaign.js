@@ -4,27 +4,27 @@
 (function () {
   const MEDIA = [
     { type: "image", src: "img/run-bangkok-720.webp", w: 720, h: 1280,
-      label: { en: "Run · Bangkok, 05:30", zh: "跑步 · 曼谷 清晨 5:30", th: "วิ่ง · กรุงเทพฯ 05:30 น." },
+      label: { en: "Run · Bangkok, 05:30", zh: "跑步 · 曼谷 清晨 5:30", th: "วิ่ง · กรุงเทพฯ 05:30 น." , vi: "Chạy bộ · Bangkok, 05:30", id: "Lari · Bangkok, 05.30", ms: "Larian · Bangkok, 5.30 pagi", fil: "Takbo · Bangkok, 5:30 n.u.", km: "រត់ · បាងកក ម៉ោង 05:30", lo: "ແລ່ນ · ບາງກອກ 05:30", my: "ပြေး · ဘန်ကောက် 05:30" },
       alt: { en: "A runner in a green Yaspii tank and black shorts on a Bangkok road at sunrise",
              zh: "清晨的曼谷街道上，穿绿色 Yaspii 背心和黑色短裤跑步的女生",
              th: "นักวิ่งสวมเสื้อกล้าม Yaspii สีเขียวและกางเกงขาสั้นสีดำบนถนนในกรุงเทพฯ ยามเช้า" } },
     { type: "image", src: "img/ride-coast-v3-720.webp", w: 720, h: 1280,
-      label: { en: "Ride · Coast road", zh: "骑行 · 海岸公路", th: "ปั่น · ถนนเลียบทะเล" },
+      label: { en: "Ride · Coast road", zh: "骑行 · 海岸公路", th: "ปั่น · ถนนเลียบทะเล" , vi: "Đạp xe · Đường ven biển", id: "Bersepeda · Jalan pesisir", ms: "Berbasikal · Jalan pantai", fil: "Bisikleta · Daan sa baybayin", km: "ជិះកង់ · ផ្លូវមាត់សមុទ្រ", lo: "ຂີ່ລົດຖີບ · ຖະໜົນແຄມທະເລ", my: "စက်ဘီး · ကမ်းခြေလမ်း" },
       alt: { en: "A cyclist in a green Yaspii jersey and black bib shorts on a coastal road",
              zh: "海边公路上，穿绿色 Yaspii 骑行服骑车的女生",
              th: "นักปั่นสวมเสื้อปั่น Yaspii สีเขียวบนถนนเลียบชายฝั่ง" } },
     { type: "image", src: "img/tennis-court-720.webp", w: 720, h: 1280,
-      label: { en: "Tennis · Match point", zh: "网球 · 赛点", th: "เทนนิส · แมตช์พอยต์" },
+      label: { en: "Tennis · Match point", zh: "网球 · 赛点", th: "เทนนิส · แมตช์พอยต์" , vi: "Quần vợt · Điểm quyết định", id: "Tenis · Match point", ms: "Tenis · Mata perlawanan", fil: "Tennis · Match point", km: "កីឡាវាយកូនបាល់ · ពិន្ទុសម្រេច", lo: "ເທັນນິສ · ແມັດພອຍ", my: "တင်းနစ် · ပွဲသိမ်းအမှတ်" },
       alt: { en: "A tennis player in a green Yaspii dress tossing the ball to serve",
              zh: "穿绿色 Yaspii 网球裙、抛球准备发球的女生",
              th: "นักเทนนิสสวมชุดเดรส Yaspii สีเขียวกำลังโยนลูกเพื่อเสิร์ฟ" } },
     { type: "image", src: "img/trail-inthanon-v2-720.webp", w: 720, h: 1280,
-      label: { en: "Trail · Doi Inthanon, 2,565 m", zh: "徒步 · 因他暖山 2565 米", th: "เดินป่า · ดอยอินทนนท์ 2,565 ม." },
+      label: { en: "Trail · Doi Inthanon, 2,565 m", zh: "徒步 · 因他暖山 2565 米", th: "เดินป่า · ดอยอินทนนท์ 2,565 ม." , vi: "Leo núi · Doi Inthanon, 2.565 m", id: "Mendaki · Doi Inthanon, 2.565 m", ms: "Mendaki · Doi Inthanon, 2,565 m", fil: "Hiking · Doi Inthanon, 2,565 m", km: "ដើរព្រៃ · ដូយអ៊ីនថានុន 2,565 ម", lo: "ຍ່າງປ່າ · ດອຍອິນທະນົນ 2,565 ມ", my: "တောင်တက် · ဒွိုင်အင်ထနွန် ၂,၅၆၅ မီတာ" },
       alt: { en: "A hiker in a green Yaspii rain jacket and black leggings climbing a misty mountain trail",
              zh: "雾中山道上，穿绿色 Yaspii 冲锋衣和黑色紧身裤攀登的女生",
              th: "นักเดินป่าสวมแจ็กเก็ต Yaspii สีเขียวและเลกกิ้งสีดำปีนเส้นทางบนภูเขาท่ามกลางหมอก" } },
     { type: "image", src: "img/yoga-chiangmai-v2-720.webp", w: 720, h: 1280,
-      label: { en: "Yoga · Mae Rim, 06:10", zh: "瑜伽 · 清迈湄林 清晨 6:10", th: "โยคะ · แม่ริม 06:10 น." },
+      label: { en: "Yoga · Mae Rim, 06:10", zh: "瑜伽 · 清迈湄林 清晨 6:10", th: "โยคะ · แม่ริม 06:10 น." , vi: "Yoga · Mae Rim, 06:10", id: "Yoga · Mae Rim, 06.10", ms: "Yoga · Mae Rim, 6.10 pagi", fil: "Yoga · Mae Rim, 6:10 n.u.", km: "យូហ្គា · ម៉ែរីម ម៉ោង 06:10", lo: "ໂຍຄະ · ແມ່ຣິມ 06:10", my: "ယောဂ · မယ်ရင်း 06:10" },
       alt: { en: "A woman in a green Yaspii yoga set with palms together in an open-air teak pavilion above the Chiang Mai rainforest",
              zh: "清迈雨林中的柚木瑜伽亭里，穿绿色 Yaspii 瑜伽套装双手合十的女生",
              th: "ผู้หญิงสวมชุดโยคะ Yaspii สีเขียวพนมมือในศาลาไม้สักกลางป่าเชียงใหม่" } }
@@ -35,7 +35,14 @@
   const T = {
     en: { soon: "Photo coming soon", film: "Brand film", filmSoon: "Coming soon", prev: "Previous photos", next: "Next photos", close: "Close", open: "View larger" },
     zh: { soon: "照片即将上线", film: "品牌影片", filmSoon: "即将上线", prev: "上一组照片", next: "下一组照片", close: "关闭", open: "查看大图" },
-    th: { soon: "ภาพกำลังจะมา", film: "ภาพยนตร์แบรนด์", filmSoon: "เร็ว ๆ นี้", prev: "ภาพก่อนหน้า", next: "ภาพถัดไป", close: "ปิด", open: "ดูภาพใหญ่" }
+    th: { soon: "ภาพกำลังจะมา", film: "ภาพยนตร์แบรนด์", filmSoon: "เร็ว ๆ นี้", prev: "ภาพก่อนหน้า", next: "ภาพถัดไป", close: "ปิด", open: "ดูภาพใหญ่" },
+    vi: {"soon": "Ảnh sắp ra mắt", "film": "Phim thương hiệu", "filmSoon": "Sắp ra mắt", "prev": "Ảnh trước", "next": "Ảnh tiếp", "close": "Đóng", "open": "Xem ảnh lớn"},
+    id: {"soon": "Foto segera hadir", "film": "Film merek", "filmSoon": "Segera hadir", "prev": "Foto sebelumnya", "next": "Foto berikutnya", "close": "Tutup", "open": "Lihat lebih besar"},
+    ms: {"soon": "Foto akan datang", "film": "Filem jenama", "filmSoon": "Akan datang", "prev": "Foto sebelumnya", "next": "Foto seterusnya", "close": "Tutup", "open": "Lihat lebih besar"},
+    fil: {"soon": "Malapit na ang larawan", "film": "Brand film", "filmSoon": "Malapit na", "prev": "Nakaraang larawan", "next": "Susunod na larawan", "close": "Isara", "open": "Tingnan nang mas malaki"},
+    km: {"soon": "រូបភាពនឹងមកដល់ឆាប់ៗ", "film": "ភាពយន្តម៉ាក", "filmSoon": "ឆាប់ៗនេះ", "prev": "រូបមុន", "next": "រូបបន្ទាប់", "close": "បិទ", "open": "មើលធំ"},
+    lo: {"soon": "ຮູບພາບຈະມາໄວໆນີ້", "film": "ຮູບເງົາແບຣນ", "filmSoon": "ໄວໆນີ້", "prev": "ຮູບກ່ອນໜ້າ", "next": "ຮູບຖັດໄປ", "close": "ປິດ", "open": "ເບິ່ງຮູບໃຫຍ່"},
+    my: {"soon": "ဓာတ်ပုံ မကြာမီ", "film": "ဘရန်းရုပ်ရှင်", "filmSoon": "မကြာမီ", "prev": "ယခင်ပုံများ", "next": "နောက်ပုံများ", "close": "ပိတ်ရန်", "open": "ပုံကြီးကြည့်ရန်"}
   };
   const track = document.getElementById("cp-track");
   const filmBox = document.getElementById("cp-film");
@@ -49,12 +56,12 @@
     track.replaceChildren(...MEDIA.map((m, i) => {
       const li = el("li", "cp-item" + (m.type === "soon" ? " cp-soon" : ""));
       if (m.type === "image") {
-        const b = el("button", "cp-open"); b.type = "button"; b.setAttribute("aria-label", t.open + ": " + m.label[L]);
-        const img = el("img"); img.src = m.src; img.width = m.w; img.height = m.h; img.alt = m.alt[L]; img.loading = i < 2 ? "eager" : "lazy"; img.decoding = "async";
+        const b = el("button", "cp-open"); b.type = "button"; b.setAttribute("aria-label", t.open + ": " + (m.label[L] || m.label.en));
+        const img = el("img"); img.src = m.src; img.width = m.w; img.height = m.h; img.alt = m.alt[L] || m.alt.en; img.loading = i < 2 ? "eager" : "lazy"; img.decoding = "async";
         b.append(img); b.addEventListener("click", () => openLarge(m));
-        li.append(b, el("p", "cp-cap", m.label[L]));
+        li.append(b, el("p", "cp-cap", (m.label[L] || m.label.en)));
       } else {
-        const box = el("div", "cp-ph"); box.append(el("span", "cp-ph-sport", m.label[L]), el("span", "cp-ph-note", t.soon));
+        const box = el("div", "cp-ph"); box.append(el("span", "cp-ph-sport", (m.label[L] || m.label.en)), el("span", "cp-ph-note", t.soon));
         li.append(box);
       }
       return li;
@@ -90,7 +97,7 @@
 
   function openLarge(m) {
     if (!dlg || !dlg.showModal) { window.open(m.src, "_blank"); return; }
-    const img = dlg.querySelector("img"); img.src = m.src; img.alt = m.alt[lang()];
+    const img = dlg.querySelector("img"); img.src = m.src; img.alt = m.alt[lang()] || m.alt.en;
     dlg.showModal();
   }
   if (dlg) {

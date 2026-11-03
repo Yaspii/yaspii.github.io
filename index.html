@@ -21,8 +21,8 @@
   --accent:#C48612;
   --accent-text:#875B05;
   --accent-ink:#173F33;
-  --display:"Bricolage Grotesque","Noto Sans Thai","Noto Sans SC",ui-sans-serif,system-ui,sans-serif;
-  --body:"Figtree","Noto Sans Thai","Noto Sans SC",ui-sans-serif,system-ui,sans-serif;
+  --display:"Bricolage Grotesque","Noto Sans Thai","Noto Sans SC","Noto Sans Khmer","Noto Sans Lao","Noto Sans Myanmar",ui-sans-serif,system-ui,sans-serif;
+  --body:"Figtree","Noto Sans Thai","Noto Sans SC","Noto Sans Khmer","Noto Sans Lao","Noto Sans Myanmar",ui-sans-serif,system-ui,sans-serif;
   --mono:"JetBrains Mono","Noto Sans Thai","Noto Sans SC",ui-monospace,SFMono-Regular,Menlo,monospace;
 }
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
@@ -97,7 +97,7 @@ h2{font-family:var(--display);font-weight:700;font-size:clamp(32px,4.6vw,54px);l
 .meta{font-family:var(--mono);font-size:12px;color:var(--muted);letter-spacing:.03em}
 @media (max-width:820px){.pieces{grid-template-columns:1fr}}
 
-/* tool */ .tool{background:var(--ink);color:var(--bg)} .tool .eyebrow{color:var(--accent)} .tool p{color:inherit;opacity:.8;max-width:44ch;margin:14px 0 24px} .tool .btn{background:#E2A72E;color:#173F33} .tool .btn:hover{background:var(--bg);color:var(--ink)}  /* waitlist */
+/* waitlist */
 .join .wrap{display:grid;grid-template-columns:1.1fr 1fr;gap:48px;align-items:start}
 .join p{color:var(--muted);max-width:42ch}
 form{display:grid;gap:14px}
@@ -180,16 +180,21 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:16px;justify-content:space-between;
 .cp-close{position:fixed;top:16px;right:16px;width:48px;height:48px;border-radius:50%;border:0;background:#F1EAD8;color:#173F33;font-size:22px;cursor:pointer}
 @media (prefers-reduced-motion:reduce){.cp-open img{transition:none}.cp-open:hover img{transform:none}}
 </style>
+<link rel="stylesheet" href="nav.css?v=20261103">
 </head>
 <body>
 
-<nav><div class="wrap">
-  <a class="logo" href="#top" aria-label="Yaspii home"><svg aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="-10 -1177 3289 1227"><g fill="currentColor"><g transform="scale(1 -1)"><path transform="translate(0.0 0)" d="M251 0V203L4 660H198L329 347H335L466 660H658L413 205V0Z"/><path transform="translate(632.0 0)" d="M14 0 238 660H474L698 0H522L485 124H227L190 0ZM453 232 364 534H348L259 232Z"/><path transform="translate(1314.0 0)" d="M331 -14Q267 -14 215.0 -2.0Q163 10 125.0 34.5Q87 59 65.0 97.0Q43 135 39 185L180 232Q183 190 204.0 162.0Q225 134 260.5 120.5Q296 107 340 107Q382 107 410.5 117.5Q439 128 453.5 144.5Q468 161 468 180Q468 202 449.0 216.5Q430 231 397.0 241.5Q364 252 320 262Q270 274 222.0 288.0Q174 302 135.0 324.5Q96 347 73.5 382.5Q51 418 51 472Q51 533 82.0 578.0Q113 623 173.0 648.5Q233 674 321 674Q408 674 469.0 649.0Q530 624 563.0 579.5Q596 535 599 476L455 435Q455 464 445.5 486.0Q436 508 419.0 522.5Q402 537 377.0 544.5Q352 552 320 552Q282 552 255.5 543.0Q229 534 216.0 519.5Q203 505 203 486Q203 462 223.5 446.5Q244 431 279.5 420.5Q315 410 358 400Q401 391 447.0 377.5Q493 364 533.0 342.0Q573 320 597.5 282.5Q622 245 622 188Q622 127 589.5 81.5Q557 36 492.0 11.0Q427 -14 331 -14Z"/><path transform="translate(1942.0 0)" d="M69 0V660H345Q409 660 460.5 645.0Q512 630 549.0 600.5Q586 571 605.5 525.5Q625 480 625 419Q625 341 589.5 288.0Q554 235 484.5 208.0Q415 181 311 181H230V0ZM230 537V305H334Q399 305 431.0 332.0Q463 359 463 423Q463 479 433.5 508.0Q404 537 340 537Z"/><path transform="translate(2566.0 0)" d="M69 0V660H233V0Z"/><path transform="translate(2839.0 0)" d="M69 0V660H233V0Z"/></g><g transform="translate(3014.6 -764.0) scale(9.0786) translate(-89 -68)"><path d="M116 50 C100 28 68 32 62 52 C60 61 69 63 76 58 C86 51 100 56 109 68 Z"/></g></g></svg></a>
-  <div class="navr">
-    <div class="lang" role="group" aria-label="Language"><button type="button" data-lang="en" aria-pressed="true">EN</button><button type="button" data-lang="zh" aria-pressed="false" lang="zh-CN">中文</button><button type="button" data-lang="th" aria-pressed="false" lang="th">ไทย</button></div>
-    <a class="navlink" href="#join" data-i18n="nav.join">Join the waitlist</a>
+<header class="yh">
+  <div class="wrap yh-top">
+    <a class="logo" href="index.html" aria-label="Yaspii home"><svg aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="-10 -1177 3289 1227"><g fill="currentColor"><g transform="scale(1 -1)"><path transform="translate(0.0 0)" d="M251 0V203L4 660H198L329 347H335L466 660H658L413 205V0Z"/><path transform="translate(632.0 0)" d="M14 0 238 660H474L698 0H522L485 124H227L190 0ZM453 232 364 534H348L259 232Z"/><path transform="translate(1314.0 0)" d="M331 -14Q267 -14 215.0 -2.0Q163 10 125.0 34.5Q87 59 65.0 97.0Q43 135 39 185L180 232Q183 190 204.0 162.0Q225 134 260.5 120.5Q296 107 340 107Q382 107 410.5 117.5Q439 128 453.5 144.5Q468 161 468 180Q468 202 449.0 216.5Q430 231 397.0 241.5Q364 252 320 262Q270 274 222.0 288.0Q174 302 135.0 324.5Q96 347 73.5 382.5Q51 418 51 472Q51 533 82.0 578.0Q113 623 173.0 648.5Q233 674 321 674Q408 674 469.0 649.0Q530 624 563.0 579.5Q596 535 599 476L455 435Q455 464 445.5 486.0Q436 508 419.0 522.5Q402 537 377.0 544.5Q352 552 320 552Q282 552 255.5 543.0Q229 534 216.0 519.5Q203 505 203 486Q203 462 223.5 446.5Q244 431 279.5 420.5Q315 410 358 400Q401 391 447.0 377.5Q493 364 533.0 342.0Q573 320 597.5 282.5Q622 245 622 188Q622 127 589.5 81.5Q557 36 492.0 11.0Q427 -14 331 -14Z"/><path transform="translate(1942.0 0)" d="M69 0V660H345Q409 660 460.5 645.0Q512 630 549.0 600.5Q586 571 605.5 525.5Q625 480 625 419Q625 341 589.5 288.0Q554 235 484.5 208.0Q415 181 311 181H230V0ZM230 537V305H334Q399 305 431.0 332.0Q463 359 463 423Q463 479 433.5 508.0Q404 537 340 537Z"/><path transform="translate(2566.0 0)" d="M69 0V660H233V0Z"/><path transform="translate(2839.0 0)" d="M69 0V660H233V0Z"/></g><g transform="translate(3014.6 -764.0) scale(9.0786) translate(-89 -68)"><path d="M116 50 C100 28 68 32 62 52 C60 61 69 63 76 58 C86 51 100 56 109 68 Z"/></g></g></svg></a>
+    <div class="yh-r">
+      <label class="yh-lang"><span class="sr" data-i18n="nav.lang">Language</span><select data-lang-select><option value="en" lang="en" selected>English</option><option value="th" lang="th">ไทย</option><option value="zh" lang="zh-CN">中文</option><option value="vi" lang="vi">Tiếng Việt</option><option value="id" lang="id">Bahasa Indonesia</option><option value="ms" lang="ms">Bahasa Melayu</option><option value="fil" lang="fil">Filipino</option><option value="km" lang="km">ខ្មែរ</option><option value="lo" lang="lo">ລາວ</option><option value="my" lang="my">မြန်မာ</option></select></label>
+      <a class="yh-join" href="#join" data-i18n="nav.join">Join the waitlist</a>
+    </div>
   </div>
-</div></nav>
+  <nav class="wrap yh-lines" aria-label="Collections" data-i18n-aria="nav.lines"><a href="index.html" aria-current="page" data-i18n="nav.sport">SPORT</a><a href="fashion.html" data-i18n="nav.fashion">FASHION</a><a href="business.html" data-i18n="nav.business">BUSINESS</a></nav>
+  <nav class="wrap yh-cats" aria-label="Shop by category" data-i18n-aria="nav.shop"><a href="index.html#drop" data-i18n="cat.tops">Tops</a><a href="index.html#drop" data-i18n="cat.bottoms">Bottoms</a><span class="c"><span data-i18n="cat.sets">Sets</span><small data-i18n="nav.soon">Soon</small></span><span class="c"><span data-i18n="cat.outer">Outerwear</span><small data-i18n="nav.soon">Soon</small></span><span class="c"><span data-i18n="cat.shoes">Shoes</span><small data-i18n="nav.soon">Soon</small></span><span class="c"><span data-i18n="cat.eyewear">Eyewear</span><small data-i18n="nav.soon">Soon</small></span><span class="c"><span data-i18n="cat.acc">Accessories</span><small data-i18n="nav.soon">Soon</small></span></nav>
+</header>
 
 <header class="hero" id="top"><div class="wrap">
   <div class="hero-text">
@@ -340,7 +345,7 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:16px;justify-content:space-between;
 </article>
 
 </div></div></section>
-<section class="tool"><div class="wrap"><div class="eyebrow" data-i18n="tool.eyebrow">Free tool</div><h2 data-i18n="tool.h2">Hungry? Spin the wheel for a Thai dish.</h2><p data-i18n="tool.p">Forty Thai dishes, from street breakfasts to desserts. Spin, and find out what you are eating and how spicy it is.</p><a class="btn" href="meal.html" data-i18n="tool.cta">Open Thai Food Spin →</a></div></section>  <section class="join" id="join"><div class="wrap">
+<section class="join" id="join"><div class="wrap">
   <div>
     <div class="eyebrow" data-i18n="join.eyebrow">Waitlist</div>
     <h2 data-i18n="join.h2">Be first to try drop one.</h2>
@@ -350,7 +355,7 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:16px;justify-content:space-between;
     <div class="field"><label for="email" data-i18n="form.email">Email</label><input id="email" name="email" type="email" autocomplete="email" placeholder="you@example.com" required></div>
     <div class="field"><label for="city" data-i18n="form.city">City</label><input id="city" name="city" type="text" autocomplete="address-level2" placeholder="Singapore" data-i18n-ph="form.city.ph"></div>
     <div class="field"><label for="practice" data-i18n="form.practice">What do you train most?</label>
-      <select id="practice" name="practice"><option value="" data-i18n="opt.choose">Choose one</option><option value="yoga" data-i18n="opt.yoga">Yoga</option><option value="pilates" data-i18n="opt.pilates">Pilates</option><option value="gym" data-i18n="opt.gym">Gym</option><option value="running" data-i18n="opt.running">Running</option><option value="everyday" data-i18n="opt.everyday">Everyday wear</option></select></div>
+      <select id="practice" name="practice"><option value="" data-i18n="opt.choose">Choose one</option><option value="running" data-i18n="opt.running">Running</option><option value="trail" data-i18n="opt.trail">Trail running</option><option value="walking" data-i18n="opt.walking">Walking & hiking</option><option value="cycling" data-i18n="opt.cycling">Cycling</option><option value="swimming" data-i18n="opt.swimming">Swimming</option><option value="triathlon" data-i18n="opt.triathlon">Triathlon</option><option value="gym" data-i18n="opt.gym">Gym & strength</option><option value="hiit" data-i18n="opt.hiit">HIIT & CrossFit</option><option value="yoga" data-i18n="opt.yoga">Yoga</option><option value="pilates" data-i18n="opt.pilates">Pilates</option><option value="barre" data-i18n="opt.barre">Barre</option><option value="dance" data-i18n="opt.dance">Dance</option><option value="boxing" data-i18n="opt.boxing">Boxing & Muay Thai</option><option value="martial" data-i18n="opt.martial">Martial arts</option><option value="tennis" data-i18n="opt.tennis">Tennis</option><option value="badminton" data-i18n="opt.badminton">Badminton</option><option value="pickleball" data-i18n="opt.pickleball">Pickleball & padel</option><option value="tabletennis" data-i18n="opt.tabletennis">Table tennis</option><option value="football" data-i18n="opt.football">Football</option><option value="basketball" data-i18n="opt.basketball">Basketball</option><option value="volleyball" data-i18n="opt.volleyball">Volleyball</option><option value="golf" data-i18n="opt.golf">Golf</option><option value="climbing" data-i18n="opt.climbing">Climbing</option><option value="surfing" data-i18n="opt.surfing">Surfing & water sports</option><option value="skate" data-i18n="opt.skate">Skateboarding</option><option value="everyday" data-i18n="opt.everyday">Everyday wear</option><option value="other" data-i18n="opt.other">Other</option></select></div>
     <button class="btn" type="submit" data-i18n="form.submit">Join the waitlist</button>
     <p class="note" id="note" role="status"></p>
   </form>
@@ -361,16 +366,13 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:16px;justify-content:space-between;
   <span data-i18n="footer.tag">Designed for heat. Fitted for Asia.</span>
 </div></footer>
 
-<script src="lang-zh.js"></script>
-<script src="lang-th.js"></script>
-<script src="i18n.js"></script>
-<script src="campaign.js?v=20261029e" defer></script>
+<script src="i18n.js?v=20261103"></script>
+<script src="campaign.js?v=20261103" defer></script>
 <script>
 (function(){
   var v=document.getElementById("hero-film"); if(!v) return;
   var snd=document.getElementById("hf-sound"), pl=document.getElementById("hf-play");
-  var T={en:{on:"Sound on",off:"Sound off",pause:"Pause",play:"Play"},zh:{on:"打开声音",off:"关闭声音",pause:"暂停",play:"播放"},th:{on:"เปิดเสียง",off:"ปิดเสียง",pause:"หยุด",play:"เล่น"}};
-  function t(){return T[window.YASPII_LANG]||T.en}
+  function t(){var Y=window.YT||function(k){return k};return {on:Y("hf.on"),off:Y("hf.off"),pause:Y("hf.pause"),play:Y("hf.play")}}
   function sync(){document.getElementById("hf-sound-t").textContent=v.muted?t().on:t().off;snd.setAttribute("aria-pressed",String(!v.muted));
     document.getElementById("hf-play-t").textContent=v.paused?t().play:t().pause;pl.setAttribute("aria-pressed",String(!v.paused));}
   snd.addEventListener("click",function(){v.muted=!v.muted;if(!v.muted){v.currentTime=0;v.play();}sync();});
