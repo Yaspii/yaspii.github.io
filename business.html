@@ -9,13 +9,13 @@
 <meta name="description" content="Yaspii Business: business casual for tropical cities, tailored lines that stay relaxed in the heat.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,600;1,6..96,400&family=Figtree:wght@400;500;600&family=JetBrains+Mono:wght@400;500;800&family=Noto+Serif+SC:wght@400;600&family=Noto+Serif+Thai:wght@400;600&family=Noto+Sans+SC:wght@400;600&family=Noto+Sans+Thai:wght@400;600&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,300;0,400;0,500;1,300&family=Figtree:wght@400;500;600&family=JetBrains+Mono:wght@400;500;800&family=Noto+Sans+SC:wght@400;600&family=Noto+Sans+Thai:wght@400;600&display=swap">
 <link rel="preload" as="image" href="img/bu-hero-1600.webp">
 <style>
-/* Business: honey, cream and navy; serif display; quiet British-heritage tailoring. Nothing from the sport line. */
+/* Business: honey, cream and navy; light wide-tracked capitals; quiet British-heritage tailoring. Nothing from the sport line. */
 :root{
   --bg:#F4EDE2;--surface:#EADFCD;--ink:#1B2A41;--muted:#5D6472;--line:#D8CAB2;--accent:#A8743A;--honey:#C89B5E;--navy:#1B2A41;--cream:#F4EDE2;
-  --display:"Bodoni Moda","Noto Serif Thai","Noto Serif SC","Noto Sans Khmer","Noto Sans Lao","Noto Sans Myanmar",Georgia,serif;
+  --display:"Jost","Noto Sans Thai","Noto Sans SC","Noto Sans Khmer","Noto Sans Lao","Noto Sans Myanmar",Georgia,serif;
   --body:"Figtree","Noto Sans Thai","Noto Sans SC","Noto Sans Khmer","Noto Sans Lao","Noto Sans Myanmar",ui-sans-serif,system-ui,sans-serif;
   --mono:"JetBrains Mono","Noto Sans Thai","Noto Sans SC",ui-monospace,Menlo,monospace;
 }
@@ -27,9 +27,9 @@ body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--body);font
 a{color:inherit}
 :focus-visible{outline:2px solid var(--accent);outline-offset:3px}
 .eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--accent)}
-h1,h2,.big{font-family:var(--display);font-weight:400;margin:0;letter-spacing:-.01em}
+h1,h2,.big{font-family:var(--display);font-weight:300;margin:0;letter-spacing:.12em;text-transform:uppercase}
 .bu-hero .wrap{padding-block:56px 36px;text-align:center;display:grid;justify-items:center;gap:18px}
-.bu-hero h1{font-size:clamp(44px,7.4vw,108px);line-height:1;max-width:14ch;text-wrap:balance}
+.bu-hero h1{font-size:clamp(30px,4.6vw,66px);line-height:1.15;max-width:22ch;text-wrap:balance}
 .bu-hero h1::after{content:"";display:block;width:64px;height:1px;background:var(--accent);margin:28px auto 0}
 .bu-lede{max-width:46ch;margin:0;color:var(--muted);font-size:clamp(17px,1.6vw,20px)}
 .bu-hero-img{display:block;width:100%;height:auto;aspect-ratio:16/9;object-fit:cover;background:var(--surface)}
@@ -37,12 +37,12 @@ h1,h2,.big{font-family:var(--display);font-weight:400;margin:0;letter-spacing:-.
 .btn:hover{background:transparent;color:var(--ink)}
 section{padding-block:88px}
 .sec-head{text-align:center;display:grid;justify-items:center;gap:12px}
-h2{font-size:clamp(34px,4.8vw,62px);line-height:1.05;max-width:18ch;text-wrap:balance}
+h2{font-size:clamp(24px,3vw,40px);line-height:1.2;max-width:24ch;text-wrap:balance}
 .film-box{margin-top:36px;aspect-ratio:16/9;background:var(--navy);color:var(--cream);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;text-align:center;padding:16px;position:relative;overflow:hidden;border-radius:2px}
 .film-box::before{content:"";position:absolute;inset:0;background:url(img/bu-hero-960.webp) center/cover;opacity:.22}
 .film-box>*{position:relative}
 .film-box svg{width:68px;height:68px;color:var(--honey)}
-.film-t{font-family:var(--display);font-size:clamp(30px,4.6vw,60px);line-height:1}
+.film-t{font-family:var(--display);font-weight:300;font-size:clamp(22px,3vw,40px);line-height:1.1;letter-spacing:.14em;text-transform:uppercase}
 .film-s{font-family:var(--mono);font-size:12px;letter-spacing:.16em;text-transform:uppercase;opacity:.8}
 .film-box video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
 .look-grid{list-style:none;margin:44px 0 0;padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px}
@@ -51,15 +51,15 @@ h2{font-size:clamp(34px,4.8vw,62px);line-height:1.05;max-width:18ch;text-wrap:ba
 .look-fig{aspect-ratio:9/16;background:var(--surface);overflow:hidden;border-radius:2px;position:relative}
 .look-fig img{display:block;width:100%;height:100%;object-fit:cover}
 .look-ph{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;border:1px solid var(--line)}
-.look-ph b{font-family:var(--display);font-weight:400;font-style:italic;font-size:clamp(44px,6vw,80px);color:var(--line)}
+.look-ph b{font-family:var(--display);font-weight:300;font-size:clamp(40px,5vw,72px);letter-spacing:.08em;color:var(--line)}
 .look-cap{margin:12px 0 0;font:500 12px/1 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
 .statement{background:var(--navy);color:var(--cream);text-align:center}
-.statement .big{font-style:italic;font-size:clamp(34px,5.4vw,72px);line-height:1.12;max-width:22ch;margin:0 auto;text-wrap:balance}
+.statement .big{font-size:clamp(22px,3.2vw,42px);line-height:1.35;max-width:30ch;margin:0 auto;text-wrap:balance}
 .statement .rule{width:64px;height:1px;background:var(--honey);margin:0 auto 32px}
 .cat-grid{list-style:none;margin:40px 0 0;padding:0;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));border-top:1px solid var(--line);border-left:1px solid var(--line)}
 @media (max-width:720px){.cat-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
 .cat-grid li{border-right:1px solid var(--line);border-bottom:1px solid var(--line);padding:26px 18px;display:grid;gap:8px}
-.cat-grid span:first-child{font-family:var(--display);font-size:clamp(22px,2.4vw,30px);line-height:1.1}
+.cat-grid span:first-child{font-family:var(--display);font-weight:400;font-size:clamp(15px,1.5vw,18px);line-height:1.2;letter-spacing:.14em;text-transform:uppercase}
 .cat-grid small{font:500 11px/1 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--accent)}
 .join{background:var(--surface)}
 .join .wrap{display:grid;grid-template-columns:1.1fr 1fr;gap:48px;align-items:start}
@@ -73,7 +73,8 @@ input:focus{outline:2px solid var(--accent);outline-offset:0;border-color:transp
 .note{font-size:14px;color:var(--muted);min-height:1.4em;margin:0}
 footer{border-top:1px solid var(--line)}
 footer .wrap{display:flex;flex-wrap:wrap;gap:16px;justify-content:space-between;padding-block:28px;font:500 12px/1.4 var(--mono);color:var(--muted);letter-spacing:.06em}
-:lang(zh-CN) h1,:lang(zh-CN) h2,:lang(zh-CN) .big{line-height:1.25;letter-spacing:.02em}
+:lang(zh-CN) h1,:lang(zh-CN) h2,:lang(zh-CN) .big{line-height:1.35;letter-spacing:.08em;font-weight:400}
+:lang(th) h1,:lang(th) h2,:lang(th) .big,:lang(km) h1,:lang(km) h2,:lang(km) .big,:lang(lo) h1,:lang(lo) h2,:lang(lo) .big,:lang(my) h1,:lang(my) h2,:lang(my) .big{letter-spacing:.02em!important;font-weight:400}
 </style>
 <link rel="stylesheet" href="nav.css?v=20261103">
 </head>
