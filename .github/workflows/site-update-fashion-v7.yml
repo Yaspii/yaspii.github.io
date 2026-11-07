@@ -1,0 +1,72 @@
+name: site-update-fashion-v7
+on:
+  push:
+    paths: ['.github/workflows/site-update-fashion-v7.yml']
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  build:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install ffmpeg
+        run: sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg
+      - name: Write scripts
+        run: |
+          mkdir -p /tmp/w
+          cat > /tmp/w/build.sh <<'EOS'
+          #!/bin/bash
+          set -e
+          IN="$1"; OUT="$2"; POSTER="$3"
+          K="0:1.10 1.24:4.88 5.08:11.0189 14.088:20.14 20.34:23.03 24.055:26.97 28.345:29.58 30.25:37.98 41.9:45.43"
+          f=""; n=0; cat=""
+          for s in $K; do a=${s%%:*}; b=${s##*:}; f="$f[0:v]trim=start=$a:end=$b,setpts=PTS-STARTPTS[v$n];"; cat="$cat[v$n]"; n=$((n+1)); done
+          f="$f${cat}concat=n=$n:v=1:a=0,fps=30,format=yuv420p[v];"
+          f="$f[0:a]atrim=0:13.95,asetpts=PTS-STARTPTS[a0];[0:a]atrim=14.06:28.10,asetpts=PTS-STARTPTS[a1];[0:a]atrim=28.37:45.4,asetpts=PTS-STARTPTS[a2];"
+          f="$f[a0][a1]acrossfade=d=0.03[a01];[a01][a2]acrossfade=d=0.03[aa]"
+          ffmpeg -y -v error -i "$IN" -filter_complex "$f" -map "[v]" -map "[aa]" -c:v libx264 -profile:v high -crf 23 -preset slow -c:a aac -b:a 128k -shortest -movflags +faststart tmp.mp4
+          D=$(ffprobe -v error -show_entries format=duration -of csv=p=0 tmp.mp4)
+          ST=$(python3 -c "print(round($D-2.8,3))")
+          ffmpeg -y -v error -i tmp.mp4 -c:v copy -af "afade=t=out:st=$ST:d=2.8" -c:a aac -b:a 128k -movflags +faststart "$OUT"
+          rm tmp.mp4
+          EOS
+          cat > /tmp/w/patch.py <<'EOP'
+          import re
+          p='fashion.html'; s=open(p,encoding='utf-8').read(); o=s
+          s=re.sub(r'\.cm-wide\{[^\n]*\n','',s,count=1)
+          for c in ('blazers','shirts'):
+              s=re.sub(r'<span class="c"><span data-i18n="cat.%s">[^<]*</span><small data-i18n="nav.soon">Soon</small></span>'%c,'',s)
+              s=re.sub(r'<li><span data-i18n="cat.%s">[^<]*</span><small data-i18n="nav.soon">Soon</small></li>'%c,'',s)
+          s=s.replace('data-film="img/fa-film.mp4?v=3" data-poster="img/fa-film-poster.jpg"','data-film="img/fa-film.mp4?v=4" data-poster="img/fa-film-poster.jpg?v=4"')
+          s=re.sub(r'<section id="commute".*?</div></section>\n','',s,count=1,flags=re.S)
+          open(p,'w',encoding='utf-8').write(s)
+          open('business.html','w',encoding='utf-8').write('''<!doctype html>
+          <html lang="en"><head><meta charset="utf-8">
+          <title>Yaspii Fashion</title>
+          <meta name="robots" content="noindex">
+          <link rel="canonical" href="https://yaspii.com/fashion.html">
+          <meta http-equiv="refresh" content="0; url=fashion.html">
+          <link rel="icon" href="img/favicon-32.png?v=2" sizes="32x32">
+          </head><body><p><a href="fashion.html">Yaspii Fashion</a></p>
+          <script>location.replace('fashion.html')</script></body></html>
+          ''')
+          EOP
+      - name: Build film v7 and poster
+        run: |
+          cd /tmp/w
+          bash build.sh "$GITHUB_WORKSPACE/img/fa-film.mp4" out.mp4
+          ffmpeg -v error -y -i "$GITHUB_WORKSPACE/img/fa-film.mp4" -vf "select=eq(n\\,765)" -frames:v 1 -q:v 3 poster.jpg
+          ffprobe -v error -show_entries format=duration out.mp4
+          cp out.mp4 "$GITHUB_WORKSPACE/img/fa-film.mp4"
+          cp poster.jpg "$GITHUB_WORKSPACE/img/fa-film-poster.jpg"
+      - name: Patch pages
+        run: python3 /tmp/w/patch.py
+      - name: Commit
+        run: |
+          git config user.name "Yaspii"
+          git config user.email "Yaspii@users.noreply.github.com"
+          git rm -q .github/workflows/site-update-fashion-v7.yml
+          git add -A img/fa-film.mp4 img/fa-film-poster.jpg fashion.html business.html
+          git commit -m "Fashion film v7, remove commute/blazers/shirts, business page redirect"
+          git push
