@@ -96,7 +96,7 @@ html[lang="th"] h2,html[lang="zh"] h2{font-family:"IBM Plex Sans Thai","PingFang
 .looks{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;margin-top:40px}
 @media (max-width:700px){.looks{grid-template-columns:1fr;max-width:460px}}
 figure{margin:0;min-width:0}
-.look img,.ph{display:block;width:100%;aspect-ratio:3/4;object-fit:cover;border-radius:2px;background:var(--paper)}
+.look img,.ph{display:block;width:100%;height:auto;aspect-ratio:3/4;object-fit:cover;border-radius:2px;background:var(--paper)}
 .ph{border:2px dashed var(--line);display:grid;place-items:center;text-align:center;padding:16px;color:var(--ink-2);font:500 13px/1.5 var(--body)}
 figcaption{display:flex;justify-content:space-between;gap:8px;font:500 12px/1.4 var(--mono);letter-spacing:.08em;padding-top:10px;text-transform:uppercase}
 figcaption span:last-child{color:var(--stitch)}
@@ -184,12 +184,12 @@ footer .logo{color:var(--pearl);width:104px;display:block}footer .logo svg{width
       <p class="lede" data-i18n="dn.drop_p">Every pair is cut from about 13 oz stretch denim and finished with silver rivets. Contrast stitching traces the shape.</p>
       <div class="swatches">
         <article class="sw">
-          <img class="pants" src="img/dn-pants-pearl.webp" alt="PEARL ARC Denim, front and back" width="635" height="604" loading="lazy">
-          <div class="sw-body"><div class="sw-head"><span class="chip" style="background:#ECE5D8;--st:#1F6B50;box-shadow:0 0 0 1px #D6CCBA"></span><div class="sw-name">PEARL</div></div><div class="sw-desc" data-i18n="dn.sw_pearl">Pearl denim, forest-green stitching.</div><span class="tag" data-i18n="dn.tag_th">Thailand launch</span></div>
-        </article>
-        <article class="sw">
           <img class="pants" src="img/dn-pants-green.webp" alt="GREEN ARC Denim, front and back" width="635" height="604" loading="lazy">
           <div class="sw-body"><div class="sw-head"><span class="chip" style="background:#173F33;--st:#ECE5D8;"></span><div class="sw-name">GREEN</div></div><div class="sw-desc" data-i18n="dn.sw_green">Forest-green denim, pearl stitching.</div><span class="tag" data-i18n="dn.tag_th">Thailand launch</span></div>
+        </article>
+        <article class="sw">
+          <img class="pants" src="img/dn-pants-pearl.webp" alt="PEARL ARC Denim, front and back" width="635" height="604" loading="lazy">
+          <div class="sw-body"><div class="sw-head"><span class="chip" style="background:#ECE5D8;--st:#1F6B50;box-shadow:0 0 0 1px #D6CCBA"></span><div class="sw-name">PEARL</div></div><div class="sw-desc" data-i18n="dn.sw_pearl">Pearl denim, forest-green stitching.</div><span class="tag" data-i18n="dn.tag_th">Thailand launch</span></div>
         </article>
         <article class="sw">
           <img class="pants" src="img/dn-pants-black.webp" alt="BLACK ARC Denim, front and back" width="635" height="604" loading="lazy">
@@ -218,8 +218,8 @@ footer .logo{color:var(--pearl);width:104px;display:block}footer .logo svg{width
       <div class="eyebrow" data-i18n="dn.lk_eyebrow">Lookbook</div>
       <h2 data-i18n="dn.lk_h2">Made for Bangkok nights.</h2>
       <div class="looks">
-        <figure class="look"><img src="img/dn-model-pearl-1080.webp" alt="Model in PEARL ARC Denim with a forest-green cropped tank and pearl sneakers" width="1080" height="1442" loading="lazy"><figcaption><span>Look 01</span><span>PEARL</span></figcaption></figure>
-        <figure class="look"><img src="img/dn-model-green-1080.webp" alt="Model in GREEN ARC Denim with a pearl tank and white sneakers" width="1080" height="1442" loading="lazy"><figcaption><span>Look 02</span><span>GREEN</span></figcaption></figure>
+        <figure class="look"><img src="img/dn-model-green-1080.webp" alt="Model in GREEN ARC Denim with a pearl tank and white sneakers" width="1080" height="1442" loading="lazy"><figcaption><span>Look 01</span><span>GREEN</span></figcaption></figure>
+        <figure class="look"><img src="img/dn-model-pearl-1080.webp" alt="Model in PEARL ARC Denim with a forest-green cropped tank and pearl sneakers" width="1080" height="1442" loading="lazy"><figcaption><span>Look 02</span><span>PEARL</span></figcaption></figure>
         <figure class="look"><img src="img/dn-model-black-1080.webp" alt="Model in BLACK ARC Denim with a white shirt and white sneakers" width="1080" height="1442" loading="lazy"><figcaption><span>Look 03</span><span>BLACK</span></figcaption></figure>
       </div>
       <p class="note" data-i18n="dn.lk_note">Concept images made with AI. Product photography arrives with the drop.</p>
