@@ -37,7 +37,7 @@
   function load(lang) {
     if (YI[lang]) return Promise.resolve();
     if (!loaded[lang]) loaded[lang] = new Promise((ok, bad) => {
-      const s = document.createElement("script"); s.src = "lang-" + lang + ".js?v=20261114b"; s.onload = ok; s.onerror = bad;
+      const s = document.createElement("script"); s.src = "lang-" + lang + ".js?v=20261114c"; s.onload = ok; s.onerror = bad;
       document.head.appendChild(s);
     });
     return loaded[lang];
